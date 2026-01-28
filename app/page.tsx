@@ -227,8 +227,8 @@ export default function HomePage() {
             <p className="mb-8 text-lg text-muted-foreground">
               Two streets in the same suburb can have completely different risk
               profiles. Flood zones, public housing proximity, noise levels, and
-              zoning changes don't show up in suburb-level data. By the time you
-              notice, it's too late.
+              zoning changes don&apos;t show up in suburb-level data. By the time you
+              notice, it&apos;s too late.
             </p>
             <div className="grid gap-6 sm:grid-cols-3">
               <Card>

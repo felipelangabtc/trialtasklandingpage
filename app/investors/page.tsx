@@ -17,7 +17,7 @@ const INVESTOR_BENEFITS = [
     icon: MapPin,
     title: 'Find Undervalued Pockets',
     description:
-      'Identify streets with strong fundamentals that the market hasn't priced in yet.',
+      'Identify streets with strong fundamentals that the market hasn&apos;t priced in yet.',
   },
   {
     icon: AlertTriangle,
@@ -168,7 +168,7 @@ export default function InvestorsPage() {
                 specific pocket three streets away from a planned train station—far
                 enough to have lower current prices, but close enough to benefit
                 from the infrastructure uplift. The pocket had low flood risk and
-                strong demographics that weren't reflected in the suburb average.
+                strong demographics that weren&apos;t reflected in the suburb average.
               </p>
               <p className="font-semibold text-primary">
                 Result: Purchased two properties in that pocket 18 months before
