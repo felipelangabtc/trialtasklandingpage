@@ -29,6 +29,14 @@ interface PocketData {
   streetName: string;
   suburb: string;
   medianPrice: string;
+  riskBreakdown: {
+    flood: number;
+    crime: number;
+    noise: number;
+    publicHousing: number;
+  };
+  priceGrowth: string;
+  daysOnMarket: number;
 }
 
 interface PocketHeatmapProps {
@@ -134,6 +142,31 @@ export function PocketHeatmap({ animate = true }: PocketHeatmapProps) {
       );
       const medianPrice = `$${((basePrice + priceVariation) / 1000).toFixed(0)}k`;
 
+      // Generate risk breakdown components
+      const floodRisk = Math.max(
+        0,
+        Math.min(1, riskScore + (Math.random() - 0.5) * 0.3)
+      );
+      const crimeRisk = Math.max(
+        0,
+        Math.min(1, riskScore + (Math.random() - 0.5) * 0.4)
+      );
+      const noiseRisk = Math.max(
+        0,
+        Math.min(1, riskScore + (Math.random() - 0.5) * 0.35)
+      );
+      const publicHousingRisk = Math.max(
+        0,
+        Math.min(1, riskScore + (Math.random() - 0.5) * 0.25)
+      );
+
+      // Price growth based on risk (lower risk = higher growth)
+      const growthRate = ((1 - riskScore) * 8 + Math.random() * 4).toFixed(1);
+      const priceGrowth = `${growthRate}%`;
+
+      // Days on market (higher risk = more days)
+      const daysOnMarket = Math.floor(30 + riskScore * 40 + Math.random() * 20);
+
       return {
         id: `pocket-${index}`,
         bounds: [
@@ -144,6 +177,14 @@ export function PocketHeatmap({ animate = true }: PocketHeatmapProps) {
         streetName: street.name,
         suburb: street.suburb,
         medianPrice,
+        riskBreakdown: {
+          flood: parseFloat(floodRisk.toFixed(2)),
+          crime: parseFloat(crimeRisk.toFixed(2)),
+          noise: parseFloat(noiseRisk.toFixed(2)),
+          publicHousing: parseFloat(publicHousingRisk.toFixed(2)),
+        },
+        priceGrowth,
+        daysOnMarket,
       };
     });
   }, []);
@@ -217,25 +258,109 @@ export function PocketHeatmap({ animate = true }: PocketHeatmapProps) {
                 }}
               >
                 <Popup>
-                  <div className="min-w-[200px] p-2">
+                  <div className="min-w-[280px] p-3">
                     <h4 className="font-semibold text-slate-900">
                       {pocket.streetName}
                     </h4>
                     <p className="text-sm text-slate-600">{pocket.suburb}</p>
-                    <div className="mt-2 space-y-1">
-                      <p className="text-sm">
-                        <span className="font-medium">Risk Score:</span>{' '}
-                        <span
-                          className="font-semibold"
+
+                    <div className="mt-3 space-y-2">
+                      {/* Overall Risk Score */}
+                      <div className="rounded-lg bg-slate-50 p-2">
+                        <p className="text-xs font-medium text-slate-700">
+                          Overall Risk Score
+                        </p>
+                        <p
+                          className="text-2xl font-bold"
                           style={{ color: getRiskColor(pocket.riskScore) }}
                         >
                           {(pocket.riskScore * 100).toFixed(0)}%
-                        </span>
-                      </p>
-                      <p className="text-sm">
-                        <span className="font-medium">Median Price:</span>{' '}
-                        {pocket.medianPrice}
-                      </p>
+                        </p>
+                      </div>
+
+                      {/* Risk Breakdown */}
+                      <div className="space-y-1">
+                        <p className="text-xs font-medium text-slate-700">
+                          Risk Factors
+                        </p>
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-slate-600">Flood Risk</span>
+                            <span
+                              className="font-medium"
+                              style={{
+                                color: getRiskColor(pocket.riskBreakdown.flood),
+                              }}
+                            >
+                              {(pocket.riskBreakdown.flood * 100).toFixed(0)}%
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-slate-600">Crime Risk</span>
+                            <span
+                              className="font-medium"
+                              style={{
+                                color: getRiskColor(pocket.riskBreakdown.crime),
+                              }}
+                            >
+                              {(pocket.riskBreakdown.crime * 100).toFixed(0)}%
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-slate-600">Noise Levels</span>
+                            <span
+                              className="font-medium"
+                              style={{
+                                color: getRiskColor(pocket.riskBreakdown.noise),
+                              }}
+                            >
+                              {(pocket.riskBreakdown.noise * 100).toFixed(0)}%
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-slate-600">
+                              Public Housing Proximity
+                            </span>
+                            <span
+                              className="font-medium"
+                              style={{
+                                color: getRiskColor(
+                                  pocket.riskBreakdown.publicHousing
+                                ),
+                              }}
+                            >
+                              {(
+                                pocket.riskBreakdown.publicHousing * 100
+                              ).toFixed(0)}
+                              %
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Market Data */}
+                      <div className="grid grid-cols-2 gap-2 border-t border-slate-200 pt-2">
+                        <div>
+                          <p className="text-xs text-slate-600">Median Price</p>
+                          <p className="text-sm font-semibold text-slate-900">
+                            {pocket.medianPrice}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-600">12mo Growth</p>
+                          <p className="text-sm font-semibold text-green-600">
+                            {pocket.priceGrowth}
+                          </p>
+                        </div>
+                        <div className="col-span-2">
+                          <p className="text-xs text-slate-600">
+                            Avg Days on Market
+                          </p>
+                          <p className="text-sm font-semibold text-slate-900">
+                            {pocket.daysOnMarket} days
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </Popup>
@@ -249,25 +374,178 @@ export function PocketHeatmap({ animate = true }: PocketHeatmapProps) {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-4 rounded-lg bg-white p-4 shadow-lg"
+          className="mt-4 rounded-lg bg-white p-6 shadow-lg"
         >
-          <h4 className="font-semibold text-slate-900">
-            {selectedPocket.streetName}, {selectedPocket.suburb}
-          </h4>
-          <div className="mt-2 grid grid-cols-2 gap-4 text-sm">
+          <div className="flex items-start justify-between">
             <div>
-              <p className="text-slate-600">Risk Score</p>
-              <p
-                className="text-lg font-bold"
-                style={{ color: getRiskColor(selectedPocket.riskScore) }}
-              >
-                {(selectedPocket.riskScore * 100).toFixed(0)}%
+              <h4 className="text-lg font-semibold text-slate-900">
+                {selectedPocket.streetName}
+              </h4>
+              <p className="text-sm text-slate-600">{selectedPocket.suburb}</p>
+            </div>
+            <button
+              onClick={() => setSelectedPocket(null)}
+              className="text-slate-400 hover:text-slate-600"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Overall Risk Score */}
+          <div className="mt-4 rounded-lg bg-gradient-to-br from-slate-50 to-slate-100 p-4">
+            <p className="text-sm font-medium text-slate-700">
+              Overall Risk Score
+            </p>
+            <p
+              className="text-4xl font-bold"
+              style={{ color: getRiskColor(selectedPocket.riskScore) }}
+            >
+              {(selectedPocket.riskScore * 100).toFixed(0)}%
+            </p>
+            <p className="mt-1 text-xs text-slate-600">
+              {selectedPocket.riskScore < 0.3
+                ? 'Low Risk - Excellent investment potential'
+                : selectedPocket.riskScore < 0.6
+                  ? 'Medium Risk - Good investment with some considerations'
+                  : 'Higher Risk - Requires careful evaluation'}
+            </p>
+          </div>
+
+          {/* Risk Breakdown */}
+          <div className="mt-4 space-y-3">
+            <p className="text-sm font-semibold text-slate-900">
+              Risk Factor Breakdown
+            </p>
+
+            <div className="space-y-2">
+              <div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-slate-700">Flood Risk</span>
+                  <span
+                    className="font-semibold"
+                    style={{
+                      color: getRiskColor(selectedPocket.riskBreakdown.flood),
+                    }}
+                  >
+                    {(selectedPocket.riskBreakdown.flood * 100).toFixed(0)}%
+                  </span>
+                </div>
+                <div className="mt-1 h-2 w-full rounded-full bg-slate-200">
+                  <div
+                    className="h-2 rounded-full transition-all"
+                    style={{
+                      width: `${selectedPocket.riskBreakdown.flood * 100}%`,
+                      backgroundColor: getRiskColor(
+                        selectedPocket.riskBreakdown.flood
+                      ),
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-slate-700">Crime Risk</span>
+                  <span
+                    className="font-semibold"
+                    style={{
+                      color: getRiskColor(selectedPocket.riskBreakdown.crime),
+                    }}
+                  >
+                    {(selectedPocket.riskBreakdown.crime * 100).toFixed(0)}%
+                  </span>
+                </div>
+                <div className="mt-1 h-2 w-full rounded-full bg-slate-200">
+                  <div
+                    className="h-2 rounded-full transition-all"
+                    style={{
+                      width: `${selectedPocket.riskBreakdown.crime * 100}%`,
+                      backgroundColor: getRiskColor(
+                        selectedPocket.riskBreakdown.crime
+                      ),
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-slate-700">Noise Levels</span>
+                  <span
+                    className="font-semibold"
+                    style={{
+                      color: getRiskColor(selectedPocket.riskBreakdown.noise),
+                    }}
+                  >
+                    {(selectedPocket.riskBreakdown.noise * 100).toFixed(0)}%
+                  </span>
+                </div>
+                <div className="mt-1 h-2 w-full rounded-full bg-slate-200">
+                  <div
+                    className="h-2 rounded-full transition-all"
+                    style={{
+                      width: `${selectedPocket.riskBreakdown.noise * 100}%`,
+                      backgroundColor: getRiskColor(
+                        selectedPocket.riskBreakdown.noise
+                      ),
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-slate-700">
+                    Public Housing Proximity
+                  </span>
+                  <span
+                    className="font-semibold"
+                    style={{
+                      color: getRiskColor(
+                        selectedPocket.riskBreakdown.publicHousing
+                      ),
+                    }}
+                  >
+                    {(selectedPocket.riskBreakdown.publicHousing * 100).toFixed(
+                      0
+                    )}
+                    %
+                  </span>
+                </div>
+                <div className="mt-1 h-2 w-full rounded-full bg-slate-200">
+                  <div
+                    className="h-2 rounded-full transition-all"
+                    style={{
+                      width: `${selectedPocket.riskBreakdown.publicHousing * 100}%`,
+                      backgroundColor: getRiskColor(
+                        selectedPocket.riskBreakdown.publicHousing
+                      ),
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Market Data */}
+          <div className="mt-4 grid grid-cols-3 gap-4 rounded-lg border border-slate-200 p-4">
+            <div>
+              <p className="text-xs text-slate-600">Median Price</p>
+              <p className="text-lg font-bold text-slate-900">
+                {selectedPocket.medianPrice}
               </p>
             </div>
             <div>
-              <p className="text-slate-600">Median Price</p>
+              <p className="text-xs text-slate-600">12mo Growth</p>
+              <p className="text-lg font-bold text-green-600">
+                {selectedPocket.priceGrowth}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-slate-600">Days on Market</p>
               <p className="text-lg font-bold text-slate-900">
-                {selectedPocket.medianPrice}
+                {selectedPocket.daysOnMarket}
               </p>
             </div>
           </div>
