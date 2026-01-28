@@ -7,7 +7,10 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PocketHeatmap } from '@/components/pocket-heatmap';
 import { RiskOverlayDemo } from '@/components/risk-overlay-demo';
-import { TestimonialGrid, type Testimonial } from '@/components/testimonial-card';
+import {
+  TestimonialGrid,
+  type Testimonial,
+} from '@/components/testimonial-card';
 import { FAQ, MICROBURBS_FAQ } from '@/components/faq';
 import { PricingCard, PRICING_TIERS } from '@/components/pricing-card';
 import { LeadForm } from '@/components/lead-form';
@@ -103,8 +106,7 @@ const HOW_IT_WORKS_STEPS = [
   {
     number: '04',
     title: 'Export Reports',
-    description:
-      'Generate client-ready reports with your branding in seconds.',
+    description: 'Generate client-ready reports with your branding in seconds.',
   },
 ];
 
@@ -161,8 +163,8 @@ export default function HomePage() {
               </h1>
 
               <p className="mb-8 text-lg text-muted-foreground sm:text-xl">
-                Hyper-local risk and pocket analysis that helps buyers agents and
-                investors avoid the wrong streets before buying. Not just
+                Hyper-local risk and pocket analysis that helps buyers agents
+                and investors avoid the wrong streets before buying. Not just
                 suburb-level averages.
               </p>
 
@@ -224,41 +226,150 @@ export default function HomePage() {
             <p className="mb-8 text-lg text-muted-foreground">
               Two streets in the same suburb can have completely different risk
               profiles. Flood zones, public housing proximity, noise levels, and
-              zoning changes don&apos;t show up in suburb-level data. By the time you
-              notice, it&apos;s too late.
+              zoning changes don&apos;t show up in suburb-level data. By the
+              time you notice, it&apos;s too late.
             </p>
             <div className="grid gap-6 sm:grid-cols-3">
               <Card>
                 <CardContent className="pt-6 text-center">
                   <div className="mb-2 text-3xl font-bold text-destructive">
-                    10+
+                    4-5 hrs
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Tools to check manually
+                    Wasted per day checking 50 properties
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardContent className="pt-6 text-center">
                   <div className="mb-2 text-3xl font-bold text-destructive">
-                    5-8 hrs
+                    $200K
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Per property research
+                    Price gap you could have spotted
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardContent className="pt-6 text-center">
                   <div className="mb-2 text-3xl font-bold text-destructive">
-                    Hidden
+                    25-30%
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Street-level risks
+                    Public housing you didn&apos;t see
                   </p>
                 </CardContent>
               </Card>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Real Customer Pain Points */}
+      <section className="bg-muted/30 py-20 lg:py-32">
+        <div className="container mx-auto px-4">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
+              What Buyers & Agents Are Really Saying
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Real feedback from property professionals like you
+            </p>
+          </div>
+
+          <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2">
+            <Card className="border-l-4 border-destructive">
+              <CardContent className="pt-6">
+                <p className="mb-4 text-lg font-medium italic">
+                  &quot;I got in trouble this morning because I&apos;ve given a
+                  property that just was next to housing commission
+                  everywhere.&quot;
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Adam Cooper, Buyer&apos;s Agent
+                </p>
+                <p className="mt-2 text-xs text-destructive">
+                  The cost of missing street-level risks
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-destructive">
+              <CardContent className="pt-6">
+                <p className="mb-4 text-lg font-medium italic">
+                  &quot;I spent four or five hours looking at 50 different
+                  properties a day.&quot;
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Adam Cooper, Buyer&apos;s Agent
+                </p>
+                <p className="mt-2 text-xs text-destructive">
+                  Time wasted on manual research
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-amber-500">
+              <CardContent className="pt-6">
+                <p className="mb-4 text-lg font-medium italic">
+                  &quot;This is 200 grand cheaper than everything else... Jesus.
+                  And even right next to it as well.&quot;
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Adam Cooper, on spotting price gaps
+                </p>
+                <p className="mt-2 text-xs text-amber-600">
+                  Opportunities hidden in plain sight
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-amber-500">
+              <CardContent className="pt-6">
+                <p className="mb-4 text-lg font-medium italic">
+                  &quot;There&apos;s a lot of data to unpack... I don&apos;t
+                  even know how to use the data or how to read it.&quot;
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Kavita, Property Investor
+                </p>
+                <p className="mt-2 text-xs text-amber-600">
+                  Data overwhelm vs. actionable insights
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-primary">
+              <CardContent className="pt-6">
+                <p className="mb-4 text-lg font-medium italic">
+                  &quot;That big red tells me yeah, don&apos;t touch it...
+                  within seconds, I can do a screenshot and send it to the
+                  client.&quot;
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Adam, on using Microburbs heatmaps
+                </p>
+                <p className="mt-2 text-xs text-primary">
+                  Visual clarity that drives decisions
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-primary">
+              <CardContent className="pt-6">
+                <p className="mb-4 text-lg font-medium italic">
+                  &quot;I can see that there&apos;s a pocket which is 64% in
+                  last 10 years, and then there&apos;s a pocket which is 22%...
+                  so much variation.&quot;
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Webinar Customer
+                </p>
+                <p className="mt-2 text-xs text-primary">
+                  Street-level insights unlock value
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -309,7 +420,8 @@ export default function HomePage() {
               Everything you need in one platform
             </h2>
             <p className="text-lg text-muted-foreground">
-              Replace multiple tools with comprehensive street-level intelligence
+              Replace multiple tools with comprehensive street-level
+              intelligence
             </p>
           </div>
 
