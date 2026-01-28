@@ -37,23 +37,21 @@ const SOCIAL_PROOF_LOGOS = [
 const TESTIMONIALS: Testimonial[] = [
   {
     quote:
-      "Microburbs transformed how we shortlist properties. What used to take me 3 hours now takes 20 minutes, and I'm finding hidden risks I would have missed.",
-    author: 'Sarah Mitchell',
-    role: 'Senior Buyers Agent',
-    company: 'Mitchell Property Group',
-  },
-  {
-    quote:
-      'The pocket-level data is a game changer. I can show my clients exactly why one street is a better investment than another with visual proof.',
-    author: 'David Chen',
-    role: 'Property Investment Advisor',
-  },
-  {
-    quote:
-      "I've avoided three bad purchases in the last quarter alone by spotting flood risk and public housing proximity that wasn't obvious from standard reports.",
-    author: 'Emma Richardson',
+      "I spent four or five hours looking at 50 different properties a day. That big red tells me yeah, don't touch it... within seconds, I can do a screenshot and send it to the client.",
+    author: 'Adam Cooper',
     role: 'Buyers Agent',
-    company: 'Richardson Advisory',
+  },
+  {
+    quote:
+      "I can see that there's a pocket which is 64% in last 10 years, and then there's a pocket which is 22%... so much variation.",
+    author: 'Property Investor',
+    role: 'Webinar Attendee',
+  },
+  {
+    quote:
+      "There's a lot of data to unpack... I don't even know how to use the data or how to read it. This makes it so clear.",
+    author: 'Kavita',
+    role: 'Property Investor',
   },
 ];
 
