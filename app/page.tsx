@@ -15,12 +15,9 @@ import { track } from '@/lib/analytics';
 import { getHeadline, getCTAText } from '@/lib/experiments';
 import {
   MapPin,
-  Target,
   Zap,
-  Shield,
   FileText,
   Layers,
-  Clock,
   TrendingUp,
   CheckCircle,
   ArrowRight,
@@ -415,6 +412,7 @@ export default function HomePage() {
             </div>
 
             <div className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&fit=crop"
                 alt="Buyers agent working with client"
@@ -430,6 +428,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <div className="order-2 lg:order-1">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=600&fit=crop"
                 alt="Property investment analysis"

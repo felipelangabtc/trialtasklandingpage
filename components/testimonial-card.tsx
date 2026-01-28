@@ -29,6 +29,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
 
         <div className="flex items-center gap-4">
           {testimonial.avatar ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={testimonial.avatar}
               alt={testimonial.author}

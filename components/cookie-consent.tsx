@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { X } from 'lucide-react';
-import { enableAnalytics, disableAnalytics, isAnalyticsEnabled } from '@/lib/analytics';
+import { enableAnalytics, disableAnalytics } from '@/lib/analytics';
 
 /**
  * Cookie consent banner with opt-in/out controls.
