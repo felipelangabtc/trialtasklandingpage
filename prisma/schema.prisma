@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Lead {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  role      String // "buyers_agent" | "investor" | "other"
+  source    String // page where lead came from
+  variant   String? // A/B test variant if applicable
+  message   String?
+
+  // Metadata
+  userAgent String?
+  ipAddress String?
+  referrer  String?
+
+  // Status
+  status    String   @default("new") // "new" | "contacted" | "converted" | "lost"
+
+  // Consent
+  marketingConsent Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([createdAt])
+  @@index([status])
+}
+
+model Event {
+  id         String   @id @default(cuid())
+  name       String
+  properties String? // JSON string
+  userId     String?
+  sessionId  String?
+  page       String?
+
+  createdAt  DateTime @default(now())
+
+  @@index([name])
+  @@index([userId])
+  @@index([sessionId])
+  @@index([createdAt])
+}
