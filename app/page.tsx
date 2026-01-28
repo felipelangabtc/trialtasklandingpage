@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PocketHeatmap } from '@/components/pocket-heatmap';
 import { RiskOverlayDemo } from '@/components/risk-overlay-demo';
+import { PropertiesForSaleMap } from '@/components/properties-for-sale-map';
 import {
   TestimonialGrid,
   type Testimonial,
@@ -480,6 +481,26 @@ export default function HomePage() {
           </div>
 
           <RiskOverlayDemo />
+        </div>
+      </section>
+
+      {/* Properties For Sale Section */}
+      <section className="bg-muted/30 py-20 lg:py-32">
+        <div className="container mx-auto px-4">
+          <div className="mb-12 text-center">
+            <Badge className="mb-4" variant="secondary">
+              Live Properties
+            </Badge>
+            <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
+              Properties for sale with risk analysis
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Real Melbourne properties with comprehensive risk scores and
+              market data
+            </p>
+          </div>
+
+          <PropertiesForSaleMap />
         </div>
       </section>
 
