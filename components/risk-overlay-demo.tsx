@@ -1,17 +1,33 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import {
-  Home,
-  Droplet,
-  Volume2,
-  AlertTriangle,
-  MapPin,
-} from 'lucide-react';
+import { Home, Droplet, Volume2, AlertTriangle } from 'lucide-react';
+
+// Dynamically import Leaflet components to avoid SSR issues
+const MapContainer = dynamic(
+  () => import('react-leaflet').then((mod) => mod.MapContainer),
+  { ssr: false }
+);
+const TileLayer = dynamic(
+  () => import('react-leaflet').then((mod) => mod.TileLayer),
+  { ssr: false }
+);
+const Polygon = dynamic(
+  () => import('react-leaflet').then((mod) => mod.Polygon),
+  { ssr: false }
+);
+const Circle = dynamic(
+  () => import('react-leaflet').then((mod) => mod.Circle),
+  { ssr: false }
+);
+const Popup = dynamic(() => import('react-leaflet').then((mod) => mod.Popup), {
+  ssr: false,
+});
 
 interface RiskLayer {
   id: string;
@@ -19,6 +35,11 @@ interface RiskLayer {
   icon: React.ReactNode;
   color: string;
   description: string;
+  zones: Array<{
+    name: string;
+    coordinates: [number, number][];
+    severity: 'low' | 'medium' | 'high';
+  }>;
 }
 
 const RISK_LAYERS: RiskLayer[] = [
@@ -28,6 +49,28 @@ const RISK_LAYERS: RiskLayer[] = [
     icon: <Droplet className="h-4 w-4" />,
     color: 'rgba(59, 130, 246, 0.6)',
     description: 'Historical flooding and flood zone data',
+    zones: [
+      {
+        name: 'Yarra River Flood Zone',
+        severity: 'high',
+        coordinates: [
+          [-37.819, 144.96],
+          [-37.82, 144.965],
+          [-37.818, 144.968],
+          [-37.817, 144.963],
+        ],
+      },
+      {
+        name: 'Minor Flood Zone',
+        severity: 'medium',
+        coordinates: [
+          [-37.81, 144.958],
+          [-37.812, 144.962],
+          [-37.809, 144.964],
+          [-37.808, 144.96],
+        ],
+      },
+    ],
   },
   {
     id: 'public_housing',
@@ -35,6 +78,18 @@ const RISK_LAYERS: RiskLayer[] = [
     icon: <Home className="h-4 w-4" />,
     color: 'rgba(168, 85, 247, 0.6)',
     description: 'Proximity to public housing areas',
+    zones: [
+      {
+        name: 'Housing Estate Area',
+        severity: 'medium',
+        coordinates: [
+          [-37.808, 144.965],
+          [-37.81, 144.968],
+          [-37.807, 144.97],
+          [-37.806, 144.967],
+        ],
+      },
+    ],
   },
   {
     id: 'noise',
@@ -42,6 +97,28 @@ const RISK_LAYERS: RiskLayer[] = [
     icon: <Volume2 className="h-4 w-4" />,
     color: 'rgba(251, 146, 60, 0.6)',
     description: 'Traffic and environmental noise data',
+    zones: [
+      {
+        name: 'High Traffic Zone',
+        severity: 'high',
+        coordinates: [
+          [-37.815, 144.955],
+          [-37.817, 144.959],
+          [-37.814, 144.96],
+          [-37.813, 144.956],
+        ],
+      },
+      {
+        name: 'Train Line Noise',
+        severity: 'medium',
+        coordinates: [
+          [-37.812, 144.968],
+          [-37.814, 144.972],
+          [-37.811, 144.973],
+          [-37.81, 144.969],
+        ],
+      },
+    ],
   },
   {
     id: 'fire',
@@ -49,17 +126,41 @@ const RISK_LAYERS: RiskLayer[] = [
     icon: <AlertTriangle className="h-4 w-4" />,
     color: 'rgba(239, 68, 68, 0.6)',
     description: 'Bushfire and fire hazard zones',
+    zones: [
+      {
+        name: 'Bushfire Prone Area',
+        severity: 'high',
+        coordinates: [
+          [-37.805, 144.96],
+          [-37.807, 144.963],
+          [-37.804, 144.965],
+          [-37.803, 144.962],
+        ],
+      },
+    ],
   },
 ];
 
 /**
- * Interactive risk overlay demonstration component.
- * Shows how different risk layers can be toggled on/off.
+ * Interactive risk overlay demonstration component using real maps.
+ * Shows how different risk layers can be toggled on/off on a real Melbourne map.
  */
 export function RiskOverlayDemo() {
   const [activeLayers, setActiveLayers] = useState<Set<string>>(
     new Set(['flooding'])
   );
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Only render map on client side
+  useEffect(() => {
+    setIsMounted(true);
+    // Import Leaflet setup for icon configuration
+    import('@/lib/leaflet-setup');
+  }, []);
+
+  // Melbourne CBD center coordinates
+  const center: [number, number] = [-37.8136, 144.9631];
+  const propertyLocation: [number, number] = [-37.8136, 144.9631];
 
   const toggleLayer = (layerId: string) => {
     setActiveLayers((prev) => {
@@ -73,69 +174,102 @@ export function RiskOverlayDemo() {
     });
   };
 
+  const getSeverityColor = (
+    severity: 'low' | 'medium' | 'high',
+    baseColor: string
+  ): string => {
+    const opacityMap = {
+      low: '0.3',
+      medium: '0.5',
+      high: '0.7',
+    };
+    return baseColor.replace(/[\d.]+\)$/, `${opacityMap[severity]})`);
+  };
+
   return (
     <Card className="overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Map Visualization */}
         <div className="relative aspect-square bg-slate-200 dark:bg-slate-700 lg:aspect-auto">
-          <div className="absolute inset-0 flex items-center justify-center p-8">
-            <div className="relative h-full w-full">
-              {/* Base map */}
-              <svg
-                className="h-full w-full"
-                viewBox="0 0 400 400"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+          <div className="h-full w-full">
+            {!isMounted ? (
+              <div className="flex h-full w-full items-center justify-center text-slate-500">
+                Loading map...
+              </div>
+            ) : (
+              <MapContainer
+                center={center}
+                zoom={14}
+                style={{ height: '100%', width: '100%' }}
+                scrollWheelZoom={false}
               >
-                {/* Street grid */}
-                <g opacity="0.3">
-                  {[...Array(10)].map((_, i) => (
-                    <React.Fragment key={i}>
-                      <line
-                        x1={i * 40 + 20}
-                        y1="20"
-                        x2={i * 40 + 20}
-                        y2="380"
-                        stroke="currentColor"
-                        strokeWidth="1"
-                      />
-                      <line
-                        x1="20"
-                        y1={i * 40 + 20}
-                        x2="380"
-                        y2={i * 40 + 20}
-                        stroke="currentColor"
-                        strokeWidth="1"
-                      />
-                    </React.Fragment>
-                  ))}
-                </g>
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
 
-                {/* Property marker */}
-                <circle cx="200" cy="200" r="8" fill="currentColor" />
-                <MapPin className="absolute left-1/2 top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 text-primary" />
-              </svg>
+                {/* Property Location Marker */}
+                <Circle
+                  center={propertyLocation}
+                  radius={100}
+                  pathOptions={{
+                    color: '#ef4444',
+                    fillColor: '#ef4444',
+                    fillOpacity: 0.8,
+                    weight: 3,
+                  }}
+                />
 
-              {/* Risk overlays */}
-              <AnimatePresence>
-                {RISK_LAYERS.map(
-                  (layer) =>
-                    activeLayers.has(layer.id) && (
-                      <motion.div
-                        key={layer.id}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="absolute inset-0"
-                        style={{
-                          background: `radial-gradient(circle at ${getLayerPosition(layer.id)}, ${layer.color} 0%, transparent 60%)`,
-                        }}
-                      />
-                    )
+                {/* Risk Layer Overlays */}
+                {RISK_LAYERS.map((layer) =>
+                  activeLayers.has(layer.id)
+                    ? layer.zones.map((zone, index) => (
+                        <Polygon
+                          key={`${layer.id}-${index}`}
+                          positions={zone.coordinates}
+                          pathOptions={{
+                            color: getSeverityColor(zone.severity, layer.color),
+                            fillColor: getSeverityColor(
+                              zone.severity,
+                              layer.color
+                            ),
+                            fillOpacity: 0.6,
+                            weight: 2,
+                          }}
+                        >
+                          <Popup>
+                            <div className="p-2">
+                              <div className="mb-2 flex items-center gap-2">
+                                {layer.icon}
+                                <h4 className="font-semibold text-slate-900">
+                                  {layer.name}
+                                </h4>
+                              </div>
+                              <p className="text-sm text-slate-700">
+                                {zone.name}
+                              </p>
+                              <p className="mt-1 text-xs text-slate-600">
+                                Severity:{' '}
+                                <span
+                                  className={`font-semibold ${
+                                    zone.severity === 'high'
+                                      ? 'text-red-600'
+                                      : zone.severity === 'medium'
+                                        ? 'text-orange-600'
+                                        : 'text-yellow-600'
+                                  }`}
+                                >
+                                  {zone.severity.toUpperCase()}
+                                </span>
+                              </p>
+                            </div>
+                          </Popup>
+                        </Polygon>
+                      ))
+                    : null
                 )}
-              </AnimatePresence>
-            </div>
+              </MapContainer>
+            )}
           </div>
         </div>
 
@@ -144,7 +278,8 @@ export function RiskOverlayDemo() {
           <div className="mb-6">
             <h3 className="text-xl font-semibold">Risk Layer Controls</h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Toggle different risk overlays to see comprehensive property analysis
+              Toggle different risk overlays to see comprehensive property
+              analysis
             </p>
           </div>
 
@@ -172,6 +307,16 @@ export function RiskOverlayDemo() {
                   <p className="mt-1 text-xs text-muted-foreground">
                     {layer.description}
                   </p>
+                  {activeLayers.has(layer.id) && (
+                    <motion.p
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      className="mt-2 text-xs font-medium text-primary"
+                    >
+                      {layer.zones.length} zone
+                      {layer.zones.length !== 1 ? 's' : ''} visible
+                    </motion.p>
+                  )}
                 </div>
                 <Switch
                   id={layer.id}
@@ -195,14 +340,4 @@ export function RiskOverlayDemo() {
       </div>
     </Card>
   );
-}
-
-function getLayerPosition(layerId: string): string {
-  const positions: Record<string, string> = {
-    flooding: '30% 70%',
-    public_housing: '60% 40%',
-    noise: '80% 60%',
-    fire: '40% 30%',
-  };
-  return positions[layerId] || '50% 50%';
 }

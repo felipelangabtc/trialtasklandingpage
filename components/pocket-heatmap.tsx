@@ -1,14 +1,34 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 
+// Dynamically import Leaflet components to avoid SSR issues
+const MapContainer = dynamic(
+  () => import('react-leaflet').then((mod) => mod.MapContainer),
+  { ssr: false }
+);
+const TileLayer = dynamic(
+  () => import('react-leaflet').then((mod) => mod.TileLayer),
+  { ssr: false }
+);
+const Rectangle = dynamic(
+  () => import('react-leaflet').then((mod) => mod.Rectangle),
+  { ssr: false }
+);
+const Popup = dynamic(() => import('react-leaflet').then((mod) => mod.Popup), {
+  ssr: false,
+});
+
 interface PocketData {
-  x: number;
-  y: number;
-  value: number;
-  label: string;
+  id: string;
+  bounds: [[number, number], [number, number]];
+  riskScore: number;
+  streetName: string;
+  suburb: string;
+  medianPrice: string;
 }
 
 interface PocketHeatmapProps {
@@ -16,113 +36,122 @@ interface PocketHeatmapProps {
 }
 
 /**
- * Stylized pocket heatmap visualization component.
- * Shows street-level risk variation using animated cells.
+ * Real pocket heatmap visualization component using Leaflet.
+ * Shows street-level risk variation on an actual map of Melbourne.
  */
 export function PocketHeatmap({ animate = true }: PocketHeatmapProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [hoveredPocket, setHoveredPocket] = useState<PocketData | null>(null);
+  const [selectedPocket, setSelectedPocket] = useState<PocketData | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
-  // Generate simulated pocket data
-  const pockets: PocketData[] = React.useMemo(() => {
-    const data: PocketData[] = [];
-    const rows = 8;
-    const cols = 12;
-
-    for (let y = 0; y < rows; y++) {
-      for (let x = 0; x < cols; x++) {
-        // Create variation to show pockets
-        const baseValue = 0.5;
-        const variation = Math.sin(x * 0.5) * Math.cos(y * 0.7) * 0.3;
-        const noise = (Math.random() - 0.5) * 0.2;
-        const value = Math.max(0, Math.min(1, baseValue + variation + noise));
-
-        data.push({
-          x,
-          y,
-          value,
-          label: `Block ${y * cols + x + 1}`,
-        });
-      }
-    }
-
-    return data;
+  // Only render map on client side
+  useEffect(() => {
+    setIsMounted(true);
+    // Import Leaflet setup for icon configuration
+    import('@/lib/leaflet-setup');
   }, []);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+  // Melbourne CBD center coordinates
+  const center: [number, number] = [-37.8136, 144.9631];
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+  // Generate realistic pocket data for Melbourne streets
+  const pockets: PocketData[] = React.useMemo(() => {
+    const melbourneStreets = [
+      {
+        name: 'Collins St',
+        lat: -37.8136,
+        lng: 144.9631,
+        suburb: 'Melbourne CBD',
+      },
+      {
+        name: 'Bourke St',
+        lat: -37.814,
+        lng: 144.9633,
+        suburb: 'Melbourne CBD',
+      },
+      {
+        name: 'Flinders St',
+        lat: -37.8183,
+        lng: 144.9671,
+        suburb: 'Melbourne CBD',
+      },
+      {
+        name: 'Elizabeth St',
+        lat: -37.81,
+        lng: 144.962,
+        suburb: 'Melbourne CBD',
+      },
+      {
+        name: 'Swanston St',
+        lat: -37.815,
+        lng: 144.965,
+        suburb: 'Melbourne CBD',
+      },
+      { name: 'Spencer St', lat: -37.819, lng: 144.954, suburb: 'Docklands' },
+      { name: 'King St', lat: -37.817, lng: 144.956, suburb: 'Melbourne CBD' },
+      {
+        name: 'William St',
+        lat: -37.811,
+        lng: 144.957,
+        suburb: 'Melbourne CBD',
+      },
+      { name: 'Queen St', lat: -37.812, lng: 144.96, suburb: 'Melbourne CBD' },
+      {
+        name: 'Lonsdale St',
+        lat: -37.811,
+        lng: 144.964,
+        suburb: 'Melbourne CBD',
+      },
+      {
+        name: 'La Trobe St',
+        lat: -37.809,
+        lng: 144.9645,
+        suburb: 'Melbourne CBD',
+      },
+      {
+        name: 'Little Collins St',
+        lat: -37.8145,
+        lng: 144.9635,
+        suburb: 'Melbourne CBD',
+      },
+    ];
 
-    const cellSize = 40;
-    const gap = 4;
-    canvas.width = 12 * (cellSize + gap);
-    canvas.height = 8 * (cellSize + gap);
+    return melbourneStreets.map((street, index) => {
+      // Create small rectangles representing pockets (approx 100m x 100m)
+      const latOffset = 0.0009; // ~100m
+      const lngOffset = 0.0012; // ~100m
 
-    let animationFrame: number;
-    let time = 0;
+      // Vary risk scores to show variation
+      const baseRisk = 0.3 + Math.sin(index * 0.7) * 0.3;
+      const riskScore = Math.max(
+        0.1,
+        Math.min(0.9, baseRisk + (Math.random() - 0.5) * 0.2)
+      );
 
-    const drawHeatmap = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Vary median prices based on location
+      const basePrice = 800000;
+      const priceVariation = Math.floor(
+        riskScore * -200000 + Math.random() * 100000
+      );
+      const medianPrice = `$${((basePrice + priceVariation) / 1000).toFixed(0)}k`;
 
-      pockets.forEach((pocket) => {
-        const x = pocket.x * (cellSize + gap);
-        const y = pocket.y * (cellSize + gap);
+      return {
+        id: `pocket-${index}`,
+        bounds: [
+          [street.lat, street.lng],
+          [street.lat + latOffset, street.lng + lngOffset],
+        ] as [[number, number], [number, number]],
+        riskScore: parseFloat(riskScore.toFixed(2)),
+        streetName: street.name,
+        suburb: street.suburb,
+        medianPrice,
+      };
+    });
+  }, []);
 
-        // Animate pulse effect
-        const pulseOffset = animate ? Math.sin(time * 0.002 + pocket.x * 0.3 + pocket.y * 0.3) * 0.1 : 0;
-        const adjustedValue = Math.max(0, Math.min(1, pocket.value + pulseOffset));
-
-        // Color gradient from green (low risk) to red (high risk)
-        const hue = (1 - adjustedValue) * 120; // 120 = green, 0 = red
-        const saturation = 70;
-        const lightness = 50 + adjustedValue * 10;
-
-        ctx.fillStyle = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-        ctx.fillRect(x, y, cellSize, cellSize);
-
-        // Add subtle border
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(x, y, cellSize, cellSize);
-      });
-
-      time += 16;
-      if (animate) {
-        animationFrame = requestAnimationFrame(drawHeatmap);
-      }
-    };
-
-    drawHeatmap();
-
-    return () => {
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
-      }
-    };
-  }, [pockets, animate]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const cellSize = 40;
-    const gap = 4;
-    const col = Math.floor(x / (cellSize + gap));
-    const row = Math.floor(y / (cellSize + gap));
-
-    const pocket = pockets.find((p) => p.x === col && p.y === row);
-    setHoveredPocket(pocket || null);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredPocket(null);
+  // Get color based on risk score
+  const getRiskColor = (riskScore: number): string => {
+    const hue = (1 - riskScore) * 120; // 120 = green, 0 = red
+    return `hsl(${hue}, 70%, 50%)`;
   };
 
   return (
@@ -132,35 +161,118 @@ export function PocketHeatmap({ animate = true }: PocketHeatmapProps) {
           Street-Level Risk Variation
         </h3>
         <p className="text-sm text-slate-300">
-          Each block represents a pocket with unique risk profile
+          Real Melbourne streets showing pocket-level risk profiles
         </p>
       </div>
 
-      <div className="relative">
-        <motion.canvas
-          ref={canvasRef}
-          className="rounded-lg"
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          style={{ cursor: 'pointer' }}
-        />
-
-        {hoveredPocket && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="absolute bottom-4 left-4 rounded-lg bg-white px-4 py-2 shadow-lg"
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="h-[500px] w-full overflow-hidden rounded-lg"
+      >
+        {!isMounted ? (
+          <div className="flex h-full w-full items-center justify-center bg-slate-700 text-white">
+            Loading map...
+          </div>
+        ) : (
+          <MapContainer
+            center={center}
+            zoom={15}
+            style={{ height: '100%', width: '100%' }}
+            scrollWheelZoom={false}
           >
-            <p className="text-sm font-medium">{hoveredPocket.label}</p>
-            <p className="text-xs text-muted-foreground">
-              Risk Score: {(hoveredPocket.value * 100).toFixed(0)}%
-            </p>
-          </motion.div>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+
+            {pockets.map((pocket) => (
+              <Rectangle
+                key={pocket.id}
+                bounds={pocket.bounds}
+                pathOptions={{
+                  fillColor: getRiskColor(pocket.riskScore),
+                  fillOpacity: 0.6,
+                  color: getRiskColor(pocket.riskScore),
+                  weight: 2,
+                  opacity: animate ? 0.8 : 0.6,
+                }}
+                eventHandlers={{
+                  click: () => setSelectedPocket(pocket),
+                  mouseover: (e) => {
+                    const layer = e.target;
+                    layer.setStyle({
+                      fillOpacity: 0.8,
+                      weight: 3,
+                    });
+                  },
+                  mouseout: (e) => {
+                    const layer = e.target;
+                    layer.setStyle({
+                      fillOpacity: 0.6,
+                      weight: 2,
+                    });
+                  },
+                }}
+              >
+                <Popup>
+                  <div className="min-w-[200px] p-2">
+                    <h4 className="font-semibold text-slate-900">
+                      {pocket.streetName}
+                    </h4>
+                    <p className="text-sm text-slate-600">{pocket.suburb}</p>
+                    <div className="mt-2 space-y-1">
+                      <p className="text-sm">
+                        <span className="font-medium">Risk Score:</span>{' '}
+                        <span
+                          className="font-semibold"
+                          style={{ color: getRiskColor(pocket.riskScore) }}
+                        >
+                          {(pocket.riskScore * 100).toFixed(0)}%
+                        </span>
+                      </p>
+                      <p className="text-sm">
+                        <span className="font-medium">Median Price:</span>{' '}
+                        {pocket.medianPrice}
+                      </p>
+                    </div>
+                  </div>
+                </Popup>
+              </Rectangle>
+            ))}
+          </MapContainer>
         )}
-      </div>
+      </motion.div>
+
+      {selectedPocket && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-4 rounded-lg bg-white p-4 shadow-lg"
+        >
+          <h4 className="font-semibold text-slate-900">
+            {selectedPocket.streetName}, {selectedPocket.suburb}
+          </h4>
+          <div className="mt-2 grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <p className="text-slate-600">Risk Score</p>
+              <p
+                className="text-lg font-bold"
+                style={{ color: getRiskColor(selectedPocket.riskScore) }}
+              >
+                {(selectedPocket.riskScore * 100).toFixed(0)}%
+              </p>
+            </div>
+            <div>
+              <p className="text-slate-600">Median Price</p>
+              <p className="text-lg font-bold text-slate-900">
+                {selectedPocket.medianPrice}
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       <div className="mt-4 flex items-center justify-between text-xs text-slate-300">
         <span className="flex items-center gap-2">
