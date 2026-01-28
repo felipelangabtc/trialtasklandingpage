@@ -1,5 +1,25 @@
 import { z } from 'zod';
 
+// Helper to create optional URL field that accepts empty strings
+const optionalUrl = () =>
+  z
+    .string()
+    .optional()
+    .transform((val) => (val === '' ? undefined : val))
+    .refine((val) => !val || z.string().url().safeParse(val).success, {
+      message: 'Invalid URL',
+    });
+
+// Helper to create optional email field that accepts empty strings
+const optionalEmail = () =>
+  z
+    .string()
+    .optional()
+    .transform((val) => (val === '' ? undefined : val))
+    .refine((val) => !val || z.string().email().safeParse(val).success, {
+      message: 'Invalid email',
+    });
+
 const envSchema = z.object({
   // App
   NODE_ENV: z
@@ -12,11 +32,7 @@ const envSchema = z.object({
 
   // Analytics
   NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
-  NEXT_PUBLIC_POSTHOG_HOST: z
-    .string()
-    .url()
-    .optional()
-    .or(z.literal('').transform(() => undefined)),
+  NEXT_PUBLIC_POSTHOG_HOST: optionalUrl(),
 
   // Error Tracking
   NEXT_PUBLIC_SENTRY_DSN: z.string().optional(),
@@ -26,18 +42,10 @@ const envSchema = z.object({
 
   // Email
   RESEND_API_KEY: z.string().optional(),
-  EMAIL_FROM: z
-    .string()
-    .email()
-    .optional()
-    .or(z.literal('').transform(() => undefined)),
+  EMAIL_FROM: optionalEmail(),
 
   // CRM
-  CRM_WEBHOOK_URL: z
-    .string()
-    .url()
-    .optional()
-    .or(z.literal('').transform(() => undefined)),
+  CRM_WEBHOOK_URL: optionalUrl(),
 
   // Rate Limiting
   RATE_LIMIT_MAX_REQUESTS: z.coerce.number().default(5),
