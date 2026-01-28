@@ -14,7 +14,7 @@ const NEXT_STEPS = [
     icon: Mail,
     title: 'Check your email',
     description:
-      'We've sent you a confirmation email with your trial access details.',
+      'We have sent you a confirmation email with your trial access details.',
   },
   {
     icon: Calendar,
