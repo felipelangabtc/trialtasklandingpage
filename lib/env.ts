@@ -12,7 +12,11 @@ const envSchema = z.object({
 
   // Analytics
   NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
-  NEXT_PUBLIC_POSTHOG_HOST: z.string().url().optional(),
+  NEXT_PUBLIC_POSTHOG_HOST: z
+    .string()
+    .url()
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
 
   // Error Tracking
   NEXT_PUBLIC_SENTRY_DSN: z.string().optional(),
@@ -22,10 +26,18 @@ const envSchema = z.object({
 
   // Email
   RESEND_API_KEY: z.string().optional(),
-  EMAIL_FROM: z.string().email().optional(),
+  EMAIL_FROM: z
+    .string()
+    .email()
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
 
   // CRM
-  CRM_WEBHOOK_URL: z.string().url().optional(),
+  CRM_WEBHOOK_URL: z
+    .string()
+    .url()
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
 
   // Rate Limiting
   RATE_LIMIT_MAX_REQUESTS: z.coerce.number().default(5),

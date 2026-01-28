@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { LeadForm } from '@/components/lead-form';
-import { CheckCircle, Clock, Users, FileText, Shield, Target } from 'lucide-react';
+import { Clock, Users, FileText, Shield, Target } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'For Buyers Agents - Street-Level Property Intelligence',
@@ -70,8 +70,8 @@ export default function BuyersAgentsPage() {
             </h1>
 
             <p className="mb-8 text-lg text-muted-foreground sm:text-xl">
-              Save hours on research, build client trust with visual analysis, and
-              avoid recommending properties with hidden risks.
+              Save hours on research, build client trust with visual analysis,
+              and avoid recommending properties with hidden risks.
             </p>
 
             <Button size="xl" asChild>
@@ -102,7 +102,9 @@ export default function BuyersAgentsPage() {
               <Card key={index} className="transition-shadow hover:shadow-lg">
                 <CardContent className="pt-6">
                   <benefit.icon className="mb-4 h-10 w-10 text-primary" />
-                  <h3 className="mb-2 text-xl font-semibold">{benefit.title}</h3>
+                  <h3 className="mb-2 text-xl font-semibold">
+                    {benefit.title}
+                  </h3>
                   <p className="text-sm text-muted-foreground">
                     {benefit.description}
                   </p>
@@ -127,7 +129,7 @@ export default function BuyersAgentsPage() {
                   key={index}
                   className="flex items-start gap-4 rounded-lg border bg-background p-4"
                 >
-                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-semibold">
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary font-semibold text-primary-foreground">
                     {index + 1}
                   </div>
                   <p className="pt-1">{step}</p>
@@ -148,15 +150,15 @@ export default function BuyersAgentsPage() {
                 "I avoided a flood-risk property my client almost bought"
               </h2>
               <p className="mb-6 text-muted-foreground">
-                A buyers agent in Brisbane was researching properties in a popular
-                suburb. Standard reports showed no issues. But Microburbs revealed
-                that the specific street had historical flooding and was adjacent
-                to a designated flood zone—information not visible in suburb-level
-                averages.
+                A buyers agent in Brisbane was researching properties in a
+                popular suburb. Standard reports showed no issues. But
+                Microburbs revealed that the specific street had historical
+                flooding and was adjacent to a designated flood zone—information
+                not visible in suburb-level averages.
               </p>
               <p className="font-semibold text-primary">
-                Result: Client avoided a $50k+ loss and purchased a safer property
-                two streets over.
+                Result: Client avoided a $50k+ loss and purchased a safer
+                property two streets over.
               </p>
             </div>
           </div>
@@ -171,8 +173,8 @@ export default function BuyersAgentsPage() {
               Start delivering better service today
             </h2>
             <p className="mb-8 text-lg text-muted-foreground">
-              Join buyers agents who are saving time, building trust, and closing
-              deals with Microburbs.
+              Join buyers agents who are saving time, building trust, and
+              closing deals with Microburbs.
             </p>
 
             <div id="lead-form" className="mx-auto max-w-lg">

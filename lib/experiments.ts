@@ -4,7 +4,7 @@ import { track } from './analytics';
 
 export interface Experiment {
   id: string;
-  variants: string[];
+  variants: readonly string[];
 }
 
 export const EXPERIMENTS = {
@@ -47,9 +47,7 @@ export function getVariant(experiment: Experiment): string {
 
   // Random assignment
   const variant =
-    experiment.variants[
-      Math.floor(Math.random() * experiment.variants.length)
-    ];
+    experiment.variants[Math.floor(Math.random() * experiment.variants.length)];
 
   localStorage.setItem(storageKey, variant);
 
