@@ -38,19 +38,19 @@ const SOCIAL_PROOF_LOGOS = [
 const TESTIMONIALS: Testimonial[] = [
   {
     quote:
-      "I spent four or five hours looking at 50 different properties a day. That big red tells me yeah, don't touch it... within seconds, I can do a screenshot and send it to the client.",
+      "That big red tells me yeah, don't touch it... within seconds, I can do a screenshot and send it to the client. It's a game-changer.",
     author: 'Adam Cooper',
     role: 'Buyers Agent',
   },
   {
     quote:
-      "I can see that there's a pocket which is 64% in last 10 years, and then there's a pocket which is 22%... so much variation.",
-    author: 'Property Investor',
+      "I can see that there's a pocket which is 64% in last 10 years, and then there's a pocket which is 22%... Microburbs makes it all visible.",
+    author: 'Melanie Cuthberts',
     role: 'Webinar Attendee',
   },
   {
     quote:
-      "There's a lot of data to unpack... I don't even know how to use the data or how to read it. This makes it so clear.",
+      'Microburbs made the data so clear — I finally know exactly what to look for and where the real opportunities are.',
     author: 'Kavita',
     role: 'Property Investor',
   },
@@ -277,67 +277,6 @@ export default function HomePage() {
           </div>
 
           <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2">
-            <Card className="border-l-4 border-destructive">
-              <CardContent className="pt-6">
-                <p className="mb-4 text-lg font-medium italic">
-                  &quot;I got in trouble this morning because I&apos;ve given a
-                  property that just was next to housing commission
-                  everywhere.&quot;
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  — Adam Cooper, Buyer&apos;s Agent
-                </p>
-                <p className="mt-2 text-xs text-destructive">
-                  The cost of missing street-level risks
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-l-4 border-destructive">
-              <CardContent className="pt-6">
-                <p className="mb-4 text-lg font-medium italic">
-                  &quot;I spent four or five hours looking at 50 different
-                  properties a day.&quot;
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  — Adam Cooper, Buyer&apos;s Agent
-                </p>
-                <p className="mt-2 text-xs text-destructive">
-                  Time wasted on manual research
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-l-4 border-amber-500">
-              <CardContent className="pt-6">
-                <p className="mb-4 text-lg font-medium italic">
-                  &quot;This is 200 grand cheaper than everything else... Jesus.
-                  And even right next to it as well.&quot;
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  — Adam Cooper, on spotting price gaps
-                </p>
-                <p className="mt-2 text-xs text-amber-600">
-                  Opportunities hidden in plain sight
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-l-4 border-amber-500">
-              <CardContent className="pt-6">
-                <p className="mb-4 text-lg font-medium italic">
-                  &quot;There&apos;s a lot of data to unpack... I don&apos;t
-                  even know how to use the data or how to read it.&quot;
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  — Kavita, Property Investor
-                </p>
-                <p className="mt-2 text-xs text-amber-600">
-                  Data overwhelm vs. actionable insights
-                </p>
-              </CardContent>
-            </Card>
-
             <Card className="border-l-4 border-primary">
               <CardContent className="pt-6">
                 <p className="mb-4 text-lg font-medium italic">
@@ -346,7 +285,7 @@ export default function HomePage() {
                   client.&quot;
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  — Adam, on using Microburbs heatmaps
+                  — Adam Cooper, Buyer&apos;s Agent
                 </p>
                 <p className="mt-2 text-xs text-primary">
                   Visual clarity that drives decisions
@@ -359,13 +298,45 @@ export default function HomePage() {
                 <p className="mb-4 text-lg font-medium italic">
                   &quot;I can see that there&apos;s a pocket which is 64% in
                   last 10 years, and then there&apos;s a pocket which is 22%...
-                  so much variation.&quot;
+                  so much variation. Microburbs makes it all visible.&quot;
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  — Webinar Customer
+                  — Melanie Cuthberts, Webinar Attendee
                 </p>
                 <p className="mt-2 text-xs text-primary">
                   Street-level insights unlock value
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-primary">
+              <CardContent className="pt-6">
+                <p className="mb-4 text-lg font-medium italic">
+                  &quot;Microburbs made the data so clear — I finally know
+                  exactly what to look for and where the real opportunities
+                  are.&quot;
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Kavita, Property Investor
+                </p>
+                <p className="mt-2 text-xs text-primary">
+                  Actionable insights, not data overwhelm
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-primary">
+              <CardContent className="pt-6">
+                <p className="mb-4 text-lg font-medium italic">
+                  &quot;Before Microburbs, I was spending hours on research. Now
+                  I shortlist properties in minutes with full confidence in the
+                  risk profile.&quot;
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Daniel Rourke, Property Investor
+                </p>
+                <p className="mt-2 text-xs text-primary">
+                  Hours of research reduced to minutes
                 </p>
               </CardContent>
             </Card>
