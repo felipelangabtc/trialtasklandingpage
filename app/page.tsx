@@ -50,9 +50,27 @@ const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote:
-      'Microburbs made the data so clear — I finally know exactly what to look for and where the real opportunities are.',
+      "This takes me ages to pull together, because I'm pulling it together from lots of different sources. I want to pull it together from one source — and that's Microburbs.",
+    author: 'Hallie',
+    role: 'Buyers Agent',
+  },
+  {
+    quote:
+      'Every other platform you have to do so much, get all your metrics correct, and there are so many options. Microburbs just makes it simple.',
+    author: 'Margaret McSwain',
+    role: 'Property Professional',
+  },
+  {
+    quote:
+      "There's a lot of data to unpack... Microburbs finally made it clear. I know exactly what to look for and where the real opportunities are.",
     author: 'Kavita',
     role: 'Property Investor',
+  },
+  {
+    quote:
+      "New land supply data — very, very good. That future outlook is exactly what I need to advise my clients properly.",
+    author: 'Hallie',
+    role: 'Buyers Agent',
   },
 ];
 
@@ -264,7 +282,62 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Real Customer Pain Points */}
+      {/* Before Microburbs - Real Pain Points */}
+      <section className="py-20 lg:py-32">
+        <div className="container mx-auto px-4">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
+              Before Microburbs
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Real stories from property professionals who learned the hard way
+            </p>
+          </div>
+
+          <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
+            <Card className="border-l-4 border-destructive">
+              <CardContent className="pt-6">
+                <p className="mb-4 text-lg font-medium italic">
+                  &quot;I got in trouble this morning because I&apos;ve given a
+                  property that just was next to housing commission
+                  everywhere.&quot;
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Adam Cooper, Buyer&apos;s Agent
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-destructive">
+              <CardContent className="pt-6">
+                <p className="mb-4 text-lg font-medium italic">
+                  &quot;I had some inheritance... I had an idea of just buy an
+                  apartment for each one of them... it&apos;s been eight years
+                  now, and it&apos;s probably grown like 50k. Which is
+                  rubbish.&quot;
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Theo, Property Investor
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-destructive">
+              <CardContent className="pt-6">
+                <p className="mb-4 text-lg font-medium italic">
+                  &quot;I spent four or five hours looking at 50 different
+                  properties a day.&quot;
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Adam Cooper, Buyer&apos;s Agent
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Real Customer Positive Feedback */}
       <section className="bg-muted/30 py-20 lg:py-32">
         <div className="container mx-auto px-4">
           <div className="mb-16 text-center">
@@ -272,7 +345,7 @@ export default function HomePage() {
               What Buyers & Agents Are Really Saying
             </h2>
             <p className="text-lg text-muted-foreground">
-              Real feedback from property professionals like you
+              Raw feedback from property professionals using Microburbs
             </p>
           </div>
 
@@ -282,13 +355,13 @@ export default function HomePage() {
                 <p className="mb-4 text-lg font-medium italic">
                   &quot;That big red tells me yeah, don&apos;t touch it...
                   within seconds, I can do a screenshot and send it to the
-                  client.&quot;
+                  client. That&apos;d be a game changer.&quot;
                 </p>
                 <p className="text-sm text-muted-foreground">
                   — Adam Cooper, Buyer&apos;s Agent
                 </p>
                 <p className="mt-2 text-xs text-primary">
-                  Visual clarity that drives decisions
+                  Visual clarity that drives instant decisions
                 </p>
               </CardContent>
             </Card>
@@ -298,13 +371,13 @@ export default function HomePage() {
                 <p className="mb-4 text-lg font-medium italic">
                   &quot;I can see that there&apos;s a pocket which is 64% in
                   last 10 years, and then there&apos;s a pocket which is 22%...
-                  so much variation. Microburbs makes it all visible.&quot;
+                  so much variation.&quot;
                 </p>
                 <p className="text-sm text-muted-foreground">
                   — Melanie Cuthberts, Webinar Attendee
                 </p>
                 <p className="mt-2 text-xs text-primary">
-                  Street-level insights unlock value
+                  Street-level insights reveal hidden value
                 </p>
               </CardContent>
             </Card>
@@ -312,15 +385,47 @@ export default function HomePage() {
             <Card className="border-l-4 border-primary">
               <CardContent className="pt-6">
                 <p className="mb-4 text-lg font-medium italic">
-                  &quot;Microburbs made the data so clear — I finally know
-                  exactly what to look for and where the real opportunities
-                  are.&quot;
+                  &quot;This takes me ages to pull together, because I&apos;m
+                  pulling it together from lots of different sources. I want to
+                  pull it together from one source.&quot;
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Hallie, Buyer&apos;s Agent
+                </p>
+                <p className="mt-2 text-xs text-primary">
+                  One platform replaces hours of manual research
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-primary">
+              <CardContent className="pt-6">
+                <p className="mb-4 text-lg font-medium italic">
+                  &quot;Every other platform you have to do so much, get all
+                  your metrics correct, and there&apos;s so many options, and
+                  it&apos;s really confusing.&quot;
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Margaret McSwain, Property Professional
+                </p>
+                <p className="mt-2 text-xs text-primary">
+                  Simplicity over complexity
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-primary">
+              <CardContent className="pt-6">
+                <p className="mb-4 text-lg font-medium italic">
+                  &quot;There&apos;s a lot of data to unpack... I don&apos;t
+                  even know how to use the data or how to read it... that will
+                  really save me a lot of mistakes.&quot;
                 </p>
                 <p className="text-sm text-muted-foreground">
                   — Kavita, Property Investor
                 </p>
                 <p className="mt-2 text-xs text-primary">
-                  Actionable insights, not data overwhelm
+                  Complex data made actionable
                 </p>
               </CardContent>
             </Card>
@@ -328,15 +433,46 @@ export default function HomePage() {
             <Card className="border-l-4 border-primary">
               <CardContent className="pt-6">
                 <p className="mb-4 text-lg font-medium italic">
-                  &quot;Before Microburbs, I was spending hours on research. Now
-                  I shortlist properties in minutes with full confidence in the
-                  risk profile.&quot;
+                  &quot;When everyone was using the same tool, all the buyers
+                  agents were ending up in one suburb, and it was artificially
+                  inflating the market.&quot;
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  — Daniel Rourke, Property Investor
+                  — Margaret McSwain, Property Professional
                 </p>
                 <p className="mt-2 text-xs text-primary">
-                  Hours of research reduced to minutes
+                  Differentiated data means better outcomes
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-primary">
+              <CardContent className="pt-6">
+                <p className="mb-4 text-lg font-medium italic">
+                  &quot;All I really want is that housing commission stuff... a
+                  good indication of, okay, there&apos;s 25% to 30% over. So I
+                  know that whole collective is an area not to touch.&quot;
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Adam Cooper, Buyer&apos;s Agent
+                </p>
+                <p className="mt-2 text-xs text-primary">
+                  Hidden risk identification saves costly mistakes
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-primary">
+              <CardContent className="pt-6">
+                <p className="mb-4 text-lg font-medium italic">
+                  &quot;New land supply. Very, very good... future outlook is
+                  exactly what I need.&quot;
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Hallie, Buyer&apos;s Agent
+                </p>
+                <p className="mt-2 text-xs text-primary">
+                  Forward-looking data for smarter decisions
                 </p>
               </CardContent>
             </Card>
