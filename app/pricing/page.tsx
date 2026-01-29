@@ -23,36 +23,36 @@ const PRICING_FAQ = [
       'After your 14-day trial, you can choose to subscribe to a paid plan. If you do nothing, your account will be paused and your data will be retained for 30 days.',
   },
   {
-    question: 'Do you offer annual billing?',
+    question: 'Do you offer quarterly billing?',
     answer:
-      'Yes, annual billing is available with a 15% discount. Contact sales for annual pricing.',
+      'Yes, quarterly billing is available with a 20% discount compared to monthly pricing. This applies to all plan tiers.',
   },
   {
     question: 'What payment methods do you accept?',
     answer:
-      'We accept all major credit cards (Visa, Mastercard, Amex) and direct debit for Office plans.',
+      'We accept all major credit cards (Visa, Mastercard, Amex) and direct debit for Portfolio Builder plans.',
   },
   {
     question: 'Is there a contract or commitment?',
     answer:
-      'No contracts. All plans are month-to-month and you can cancel anytime. Office plans have the option for annual contracts with discounts.',
+      'No contracts. All plans are month-to-month and you can cancel anytime. Portfolio Builder plans have the option for annual contracts with discounts.',
   },
   {
-    question: 'Can I add more users to my plan?',
+    question: 'Can I get a one-on-one consultation?',
     answer:
-      'Solo and Pro plans are single-user. Office plans include up to 10 seats. Contact us for enterprise pricing with more seats.',
+      'Portfolio Builder plan subscribers get access to one-on-one consultations with Chief Data Scientist Luke Metcalfe, who has over 15 years of experience in data science and real estate forecasting.',
   },
 ];
 
 const ALL_FEATURES = [
-  'Unlimited pocket analysis',
-  'All risk overlay layers (flood, fire, noise, public housing, zoning)',
-  'Historical trend data',
-  'Street-level demographics',
-  'Planning zone information',
-  'Infrastructure project tracking',
-  'Sales history and comparables',
-  'Mobile app access (iOS & Android)',
+  'DataExplorer with 5,000+ heatmap indicators',
+  'Risk overlays (bushfire, flood, noise, public housing, zoning)',
+  'Liveability Scorecards (convenience, tranquility, lifestyle, family, affluence, community)',
+  'Neighbourhood-level demographics from ABS Census',
+  'Weekly updated median house prices',
+  'Development application tracking',
+  'Property and suburb reports',
+  'Weekly data updates from authoritative government sources',
 ];
 
 export default function PricingPage() {
@@ -71,8 +71,8 @@ export default function PricingPage() {
             </h1>
 
             <p className="mb-8 text-lg text-muted-foreground">
-              Choose the plan that fits your workflow. All plans include a 14-day
-              free trial with full access.
+              Choose the plan that fits your workflow. All plans include a
+              14-day free trial with full access.
             </p>
           </div>
         </div>
@@ -88,7 +88,8 @@ export default function PricingPage() {
           </div>
 
           <p className="mt-12 text-center text-sm text-muted-foreground">
-            All prices in AUD. Taxes may apply depending on your location.
+            All prices in AUD. Save 20% with quarterly billing. Taxes may apply
+            depending on your location.
           </p>
         </div>
       </section>

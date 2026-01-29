@@ -4,12 +4,19 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { LeadForm } from '@/components/lead-form';
-import { TrendingUp, MapPin, AlertTriangle, BarChart, Eye, Zap } from 'lucide-react';
+import {
+  TrendingUp,
+  MapPin,
+  AlertTriangle,
+  BarChart,
+  Eye,
+  Zap,
+} from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'For Property Investors - Find Undervalued Pockets',
   description:
-    'Microburbs helps property investors identify undervalued streets, avoid hidden risks, and make data-driven investment decisions.',
+    'Microburbs helps property investors find undervalued pockets with 2+ billion data points, backtested growth forecasts, and 5,000+ heatmap indicators updated weekly.',
 };
 
 const INVESTOR_BENEFITS = [
@@ -17,56 +24,56 @@ const INVESTOR_BENEFITS = [
     icon: MapPin,
     title: 'Find Undervalued Pockets',
     description:
-      'Identify streets with strong fundamentals that the market hasn&apos;t priced in yet.',
+      'Identify streets with strong fundamentals using neighbourhood-level data the market hasn&apos;t priced in yet.',
   },
   {
     icon: AlertTriangle,
-    title: 'Avoid Hidden Risks',
+    title: 'Backtested Growth Forecasts',
     description:
-      'Spot capital growth risks like planning changes, infrastructure, and environmental factors.',
+      'Rigorously backtested and continually updated forecasts — not speculation. Weekly median house price changes.',
   },
   {
     icon: BarChart,
-    title: 'Data-Driven Decisions',
+    title: '5,000+ Heatmap Indicators',
     description:
-      'Replace gut feel with objective street-level data and historical trends.',
+      'Access DataExplorer with bushfire, flood, noise, public housing, zoning, demographics, and more — all in one view.',
   },
   {
     icon: Eye,
-    title: 'Track Multiple Markets',
+    title: 'Suburb Finder',
     description:
-      'Monitor dozens of pockets simultaneously across different cities and suburbs.',
+      'Filter and identify high-growth suburbs across Australia based on specific statistics-driven criteria.',
   },
   {
     icon: TrendingUp,
-    title: 'Spot Emerging Trends',
+    title: 'Development Applications',
     description:
-      'See infrastructure, zoning, and demographic changes before they affect prices.',
+      'Track planning changes weekly. Spot infrastructure, zoning, and demographic shifts before they affect prices.',
   },
   {
     icon: Zap,
-    title: 'Move Fast',
+    title: 'AI Property Finder',
     description:
-      'Make confident decisions quickly when opportunities arise in competitive markets.',
+      'Find top-performing for-sale properties matched to your investment criteria automatically.',
   },
 ];
 
 const INVESTMENT_CRITERIA = [
   {
     criterion: 'Capital Growth Potential',
-    how: 'Compare pocket-level demographics, zoning, and infrastructure plans.',
+    how: 'Backtested growth forecasts with weekly updated median house prices and neighbourhood-level demographics.',
   },
   {
     criterion: 'Risk Assessment',
-    how: 'Check flood, fire, noise, and public housing proximity for each street.',
+    how: 'Bushfire, flood, noise, public housing, heritage, and zoning overlays — from authoritative government sources.',
   },
   {
-    criterion: 'Market Timing',
-    how: 'Spot pockets before planning approvals or infrastructure completion.',
+    criterion: 'Development Tracking',
+    how: 'Development applications tracked weekly. Spot planning changes, infrastructure, and zoning shifts early.',
   },
   {
     criterion: 'Portfolio Diversification',
-    how: 'Analyze multiple markets side-by-side to balance risk.',
+    how: 'Use Suburb Finder to filter high-growth areas across Australia by statistics-driven criteria.',
   },
 ];
 
@@ -86,8 +93,9 @@ export default function InvestorsPage() {
             </h1>
 
             <p className="mb-8 text-lg text-muted-foreground sm:text-xl">
-              Make data-driven investment decisions with street-level intelligence.
-              Identify hidden opportunities and avoid costly mistakes.
+              2+ billion data points, backtested growth forecasts, and weekly
+              updated median house prices. Identify hidden opportunities with
+              Australia&apos;s most comprehensive property data.
             </p>
 
             <Button size="xl" asChild>
@@ -118,7 +126,9 @@ export default function InvestorsPage() {
               <Card key={index} className="transition-shadow hover:shadow-lg">
                 <CardContent className="pt-6">
                   <benefit.icon className="mb-4 h-10 w-10 text-primary" />
-                  <h3 className="mb-2 text-xl font-semibold">{benefit.title}</h3>
+                  <h3 className="mb-2 text-xl font-semibold">
+                    {benefit.title}
+                  </h3>
                   <p className="text-sm text-muted-foreground">
                     {benefit.description}
                   </p>
@@ -165,15 +175,16 @@ export default function InvestorsPage() {
               <p className="mb-6 text-muted-foreground">
                 An investor in Melbourne was researching suburbs with upcoming
                 infrastructure projects. Using Microburbs, they identified a
-                specific pocket three streets away from a planned train station—far
-                enough to have lower current prices, but close enough to benefit
-                from the infrastructure uplift. The pocket had low flood risk and
-                strong demographics that weren&apos;t reflected in the suburb average.
+                specific pocket three streets away from a planned train
+                station—far enough to have lower current prices, but close
+                enough to benefit from the infrastructure uplift. The pocket had
+                low flood risk and strong demographics that weren&apos;t
+                reflected in the suburb average.
               </p>
               <p className="font-semibold text-primary">
                 Result: Purchased two properties in that pocket 18 months before
-                station completion. Both have increased in value beyond the suburb
-                median.
+                station completion. Both have increased in value beyond the
+                suburb median.
               </p>
             </div>
           </div>
@@ -188,8 +199,8 @@ export default function InvestorsPage() {
               Start finding hidden opportunities
             </h2>
             <p className="mb-8 text-lg text-muted-foreground">
-              Join investors who are using street-level data to make smarter
-              decisions.
+              Join 10,000+ members using Australia&apos;s most comprehensive
+              property data to make smarter investment decisions.
             </p>
 
             <div id="lead-form" className="mx-auto max-w-lg">

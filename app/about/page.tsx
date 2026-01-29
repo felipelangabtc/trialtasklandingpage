@@ -53,9 +53,9 @@ export default function AboutPage() {
             </h1>
 
             <p className="text-lg text-muted-foreground">
-              We built Microburbs because we saw buyers agents and investors
-              wasting hours on research, using 10+ different tools, and still
-              missing critical street-level risks.
+              A free, detailed, and authoritative resource for Australian
+              property seekers — built to consolidate fragmented property
+              research into a single, accessible format.
             </p>
           </div>
         </div>
@@ -69,28 +69,34 @@ export default function AboutPage() {
 
             <div className="prose prose-lg max-w-none text-muted-foreground">
               <p>
-                Microburbs was founded in 2023 by a team of property professionals,
-                data scientists, and engineers who saw a gap in the market.
+                Microburbs was founded in 2014 by Luke Metcalfe,
+                Australia&apos;s leading data scientist and real estate
+                forecasting expert, with 15 years of startup experience in
+                reference publishing.
               </p>
 
               <p>
-                While there were plenty of tools for suburb-level analysis, there
-                was nothing that helped professionals understand the variation
-                <em>within</em> suburbs. Two streets in the same suburb can have
-                completely different risk profiles—yet most tools treat the whole
-                suburb as one homogeneous area.
+                Luke discovered that property buyers must laboriously research
+                council documents, government data, crime statistics, planning
+                information, and school performance separately. There was
+                nothing that helped professionals understand the variation
+                <em>within</em> suburbs — two streets in the same suburb can
+                have completely different risk profiles.
               </p>
 
               <p>
-                We set out to change that. By combining multiple authoritative data
-                sources with spatial analysis and intuitive visualizations, we've
-                created a platform that shows street-level reality, not
-                suburb-level averages.
+                Microburbs was built to change that. By aggregating data from
+                the Australian Bureau of Statistics, council records, planning
+                zones, flood maps, environmental reports, and infrastructure
+                databases — over 2 billion data points across 5,000+ heatmap
+                indicators — we created a platform that shows
+                neighbourhood-level reality, not suburb-level averages.
               </p>
 
               <p>
-                Today, Microburbs serves buyers agents and property investors
-                across Australia, helping them make faster, more confident
+                Today, Microburbs serves over 10,000 members and has welcomed 5+
+                million site visitors, helping homebuyers, buyers agents, and
+                property investors across Australia make faster, more confident
                 decisions based on hyper-local intelligence.
               </p>
             </div>
@@ -130,9 +136,10 @@ export default function AboutPage() {
           <div className="mx-auto max-w-3xl rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 p-12 text-center">
             <h2 className="mb-4 text-3xl font-bold">Our Mission</h2>
             <p className="text-lg text-muted-foreground">
-              To make street-level property intelligence accessible to every
-              buyers agent and investor in Australia, empowering them to make
-              better decisions faster.
+              To be Australia&apos;s most comprehensive property data resource —
+              making street-level intelligence accessible to every homebuyer,
+              buyers agent, and investor, empowering them to transform uncertain
+              property decisions into confident choices.
             </p>
           </div>
         </div>

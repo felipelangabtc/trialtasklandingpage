@@ -9,49 +9,49 @@ import { Clock, Users, FileText, Shield, Target } from 'lucide-react';
 export const metadata: Metadata = {
   title: 'For Buyers Agents - Street-Level Property Intelligence',
   description:
-    'Microburbs helps buyers agents save 5-10 hours per week on research, present visual recommendations to clients, and avoid hidden street-level risks.',
+    'Microburbs helps buyers agents consolidate council documents, crime stats, and planning data into one platform. 5,000+ heatmap indicators and liveability scorecards.',
 };
 
 const BENEFITS = [
   {
     icon: Clock,
-    title: 'Save 5-10 Hours Per Week',
+    title: 'Consolidate Your Research',
     description:
-      'Replace 10+ separate tools with one platform. What used to take hours now takes minutes.',
+      'Council documents, crime statistics, school NAPLAN data, and planning information — all in one platform instead of 10+ separate sources.',
   },
   {
     icon: FileText,
-    title: 'Client-Ready Reports',
+    title: 'Liveability Scorecards',
     description:
-      'Export branded PDF reports with maps and data your clients understand instantly.',
+      'Generate reports scoring convenience, tranquility, lifestyle, family-friendliness, affluence, and community for any address.',
   },
   {
     icon: Shield,
-    title: 'Avoid Hidden Risks',
+    title: 'Spot Hidden Risks',
     description:
-      'Spot flood zones, public housing, noise, and zoning issues before making recommendations.',
+      'Identify bushfire, flood, public housing, noise, and zoning issues with 5,000+ heatmap indicators updated weekly.',
   },
   {
     icon: Target,
-    title: 'Faster Shortlisting',
+    title: 'AI Property Finder',
     description:
-      'Compare dozens of properties quickly with pocket-level data at your fingertips.',
+      'Find top-performing for-sale properties and high-growth suburbs with data-driven filtering and backtested growth forecasts.',
   },
   {
     icon: Users,
     title: 'Build Client Trust',
     description:
-      'Show clients visual, data-backed analysis that explains exactly why you recommend a property.',
+      'Show clients visual, pocket-level analysis backed by 2+ billion data points from authoritative government sources.',
   },
 ];
 
 const WORKFLOW = [
   'Client provides target suburbs and budget',
-  'You search those suburbs in Microburbs',
-  'Toggle risk layers to filter out problem streets',
-  'Export shortlist with pocket analysis',
-  'Present client-ready reports with visual proof',
-  'Close deals faster with confident recommendations',
+  'Search those suburbs in DataExplorer with 5,000+ indicators',
+  'Toggle bushfire, flood, noise, and public housing layers',
+  'Use AI Property Finder to shortlist top-performing listings',
+  'Generate liveability scorecards and property reports',
+  'Present data-backed recommendations with neighbourhood-level detail',
 ];
 
 export default function BuyersAgentsPage() {
@@ -70,8 +70,9 @@ export default function BuyersAgentsPage() {
             </h1>
 
             <p className="mb-8 text-lg text-muted-foreground sm:text-xl">
-              Save hours on research, build client trust with visual analysis,
-              and avoid recommending properties with hidden risks.
+              Consolidate council documents, crime statistics, school
+              performance, and planning data into one platform. 5,000+ heatmap
+              indicators updated weekly.
             </p>
 
             <Button size="xl" asChild>
@@ -93,7 +94,7 @@ export default function BuyersAgentsPage() {
               Built for your workflow
             </h2>
             <p className="text-lg text-muted-foreground">
-              Everything a buyers agent needs to deliver exceptional service
+              2+ billion data points from authoritative government sources
             </p>
           </div>
 

@@ -42,51 +42,51 @@ export const MICROBURBS_FAQ: FAQItem[] = [
   {
     question: 'What data sources does Microburbs use?',
     answer:
-      'Microburbs aggregates data from multiple authoritative sources including government records, planning zones, historical sales, flood maps, environmental reports, and infrastructure databases. Data is updated regularly to ensure accuracy.',
+      'Microburbs aggregates over 2 billion data points from authoritative sources including the Australian Bureau of Statistics Census, council records, planning zones, flood maps, crime statistics, school NAPLAN data, environmental reports, Google Maps, and infrastructure databases.',
   },
   {
     question: 'How often is the data updated?',
     answer:
-      'Core datasets are refreshed weekly, with critical updates (like new planning applications or flood warnings) added as they become available. Historical trends and statistical models are recalculated monthly.',
+      'Median house prices and development applications are updated weekly. Growth forecasts are rigorously backtested and continually updated. Demographic and census data is refreshed as new ABS releases become available.',
   },
   {
     question: 'What areas does Microburbs cover?',
     answer:
-      'Microburbs currently covers major metropolitan areas across Australia, with expanding coverage to regional centers. Coverage includes detailed pocket-level data for capital cities and growing regional hubs.',
+      'Microburbs covers Australian property markets with neighbourhood-level data. The platform has served over 5 million site visitors since 2014 and continues to expand coverage across capital cities and regional areas.',
   },
   {
     question: 'Who is Microburbs designed for?',
     answer:
-      'Microburbs is built specifically for buyers agents and property investors who need to make data-driven decisions quickly. It consolidates research that typically requires multiple tools and manual analysis.',
+      'Microburbs serves homebuyers seeking suburb confirmation, property investors maximizing capital growth, buyers agents who need client-ready analysis, and sophisticated investors looking for data that gives them an edge. There are dedicated pricing tiers for each audience.',
   },
   {
-    question: 'How accurate are the risk assessments?',
+    question: 'What tools are included?',
     answer:
-      'Risk scores combine verified historical data with spatial analysis and statistical models. While no tool can predict every outcome, Microburbs surfaces objective data points that may not be visible through traditional suburb-level analysis.',
+      'Key tools include DataExplorer with 5,000+ heatmap indicators, AI Property Finder, Suburb Finder, Liveability Scorecards, Property Reports, Suburb Reports, Automated Valuation Model (AVM), and Comparative Market Analysis (CMA).',
   },
   {
-    question: 'Can I export reports for clients?',
+    question: 'What are Liveability Scorecards?',
     answer:
-      'Yes, all risk overlays and pocket analysis can be exported as client-ready PDF reports with your branding. Reports include visual maps, data tables, and clear explanations suitable for sharing with buyers.',
+      'Liveability Scorecards rate neighbourhoods across six dimensions: convenience (transit, commute, shops), tranquility (density, noise, tree coverage), lifestyle (cafes, restaurants, gyms), family (school NAPLAN scores, childcare), affluence (income, education, employment), and community (volunteerism, cultural institutions).',
+  },
+  {
+    question: 'How accurate are the growth forecasts?',
+    answer:
+      'Growth forecasts are rigorously backtested against historical data and continually updated. While no tool can predict every outcome, Microburbs surfaces objective, neighbourhood-level data points that suburb-level analysis misses.',
   },
   {
     question: 'Is there a free trial?',
     answer:
-      'Yes, new users get a 14-day free trial with full access to all features. No credit card required to start. After the trial, choose a plan that fits your workflow.',
+      'Yes, new users get a 14-day free trial with full access to all features. No credit card required to start. After the trial, choose a plan that fits your needs — Basic, Advanced, or Portfolio Builder.',
   },
   {
-    question: 'What if I need data for a specific pocket not yet covered?',
+    question: 'Do you offer quarterly billing?',
     answer:
-      'We prioritize new areas based on user demand. Contact support with your requirements, and we can often add specific pockets within 5-7 business days for active subscribers.',
+      'Yes, quarterly billing is available with a 20% discount compared to monthly pricing. This applies to all plan tiers.',
   },
   {
-    question: 'Do you comply with Australian privacy laws?',
+    question: 'Can I get a one-on-one consultation?',
     answer:
-      'Absolutely. Microburbs fully complies with the Privacy Act 1988 and Australian Privacy Principles. We only use publicly available data and do not store personal information about property owners.',
-  },
-  {
-    question: 'Can I integrate Microburbs with my existing CRM or workflow?',
-    answer:
-      'API access and integrations are available on Pro and Office plans. Common integrations include CRMs, project management tools, and custom dashboards. Contact sales for specific integration requirements.',
+      'Portfolio Builder plan subscribers get access to one-on-one consultations with Chief Data Scientist Luke Metcalfe, the founder of Microburbs with over 15 years of experience in data science and real estate forecasting.',
   },
 ];

@@ -61,68 +61,69 @@ const FEATURES = [
     icon: MapPin,
     title: 'Pocket Heatmaps',
     description:
-      'See street-by-street risk variation within suburbs. Identify safe pockets vs. risky pockets instantly.',
+      'Access 5,000+ heatmap indicators at the street level. See risk variation within suburbs — not just averages.',
   },
   {
     icon: Layers,
     title: 'Risk Overlays',
     description:
-      'Toggle flood zones, public housing, noise levels, fire risk, and zoning all in one view.',
+      'Toggle bushfire, flood, public housing, noise, and zoning layers. Development applications tracked weekly.',
   },
   {
     icon: FileText,
-    title: 'Client-Ready Reports',
+    title: 'Liveability Scorecards',
     description:
-      'Export branded PDF reports with maps and data your clients can understand.',
+      'Scores for convenience, tranquility, lifestyle, family-friendliness, affluence, and community — all in one report.',
   },
   {
     icon: Zap,
-    title: 'Faster Shortlisting',
+    title: 'AI Property Finder',
     description:
-      'Replace 10 different tools and hours of research with one platform.',
+      'Find top-performing for-sale properties and high-growth suburbs with data-driven filtering.',
   },
 ];
 
 const HOW_IT_WORKS_STEPS = [
   {
     number: '01',
-    title: 'Search Your Pocket',
+    title: 'Search Any Address',
     description:
-      'Enter an address or area. Microburbs shows you the pocket-level boundaries.',
+      'Enter an address or suburb. Microburbs shows you neighbourhood-level boundaries and pocket data.',
   },
   {
     number: '02',
-    title: 'Toggle Risk Layers',
+    title: 'Explore DataExplorer',
     description:
-      'Turn on flood, noise, public housing, fire, or zoning overlays to see cumulative risk.',
+      'Access 5,000+ heatmap indicators — flood, noise, public housing, bushfire, zoning, demographics, and more.',
   },
   {
     number: '03',
     title: 'Compare & Shortlist',
     description:
-      'See which streets are safer investments and add them to your shortlist.',
+      'Use Suburb Finder and AI Property Finder to filter high-growth areas and top-performing properties.',
   },
   {
     number: '04',
     title: 'Export Reports',
-    description: 'Generate client-ready reports with your branding in seconds.',
+    description:
+      'Generate property reports, suburb reports, and liveability scorecards with detailed data layers.',
   },
 ];
 
 const BUYERS_AGENT_OUTCOMES = [
-  'Save 5-10 hours per week on property research',
-  'Present visual, data-backed recommendations to clients',
-  'Avoid properties with hidden street-level risks',
-  'Close deals faster with confident shortlists',
-  'Build trust with transparent, visual analysis',
+  'Consolidate council documents, crime stats, and planning data in one platform',
+  'Present visual, data-backed recommendations with liveability scorecards',
+  'Spot bushfire, flood, public housing, and noise risks at the street level',
+  'Shortlist faster with AI Property Finder and Suburb Finder',
+  'Build trust with transparent, pocket-level analysis clients can see',
 ];
 
 const INVESTOR_OUTCOMES = [
-  'Identify undervalued pockets before the market catches on',
-  'Avoid streets with hidden capital growth risks',
-  'Make data-driven decisions instead of gut feel',
-  'Track multiple markets simultaneously',
-  'Spot emerging risks early (planning changes, infrastructure)',
+  'Identify undervalued pockets with backtested growth forecasts',
+  'Avoid streets with hidden capital growth risks using 5,000+ indicators',
+  'Make data-driven decisions with weekly updated median house prices',
+  'Track multiple markets with Suburb Finder and DataExplorer',
+  'Spot emerging risks early — development applications tracked weekly',
 ];
 
 export default function HomePage() {
@@ -162,9 +163,9 @@ export default function HomePage() {
               </h1>
 
               <p className="mb-8 text-lg text-muted-foreground sm:text-xl">
-                Hyper-local risk and pocket analysis that helps buyers agents
-                and investors avoid the wrong streets before buying. Not just
-                suburb-level averages.
+                Australia&apos;s most comprehensive property data — 2+ billion
+                data points and 5,000+ heatmap indicators that go deeper than
+                suburb-level averages. Built for buyers agents and investors.
               </p>
 
               <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
@@ -200,7 +201,7 @@ export default function HomePage() {
       <section className="border-y bg-muted/30 py-8">
         <div className="container mx-auto px-4">
           <p className="mb-6 text-center text-sm text-muted-foreground">
-            Trusted by professionals at leading agencies
+            Trusted by 10,000+ members and 5+ million site visitors since 2014
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8 opacity-60">
             {SOCIAL_PROOF_LOGOS.map((logo) => (
@@ -225,8 +226,10 @@ export default function HomePage() {
             <p className="mb-8 text-lg text-muted-foreground">
               Two streets in the same suburb can have completely different risk
               profiles. Flood zones, public housing proximity, noise levels, and
-              zoning changes don&apos;t show up in suburb-level data. By the
-              time you notice, it&apos;s too late.
+              zoning changes don&apos;t show up in suburb-level data. Microburbs
+              aggregates council documents, government data, crime statistics,
+              school performance, and planning information into one view — so
+              nothing gets missed.
             </p>
             <div className="grid gap-6 sm:grid-cols-3">
               <Card>
@@ -387,11 +390,10 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="mb-16 text-center">
             <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
-              Everything you need in one platform
+              Our data goes deeper than anyone else
             </h2>
             <p className="text-lg text-muted-foreground">
-              Replace multiple tools with comprehensive street-level
-              intelligence
+              2+ billion data points across 5,000+ indicators, updated weekly
             </p>
           </div>
 
@@ -429,7 +431,7 @@ export default function HomePage() {
               See pocket-level variation
             </h2>
             <p className="text-lg text-muted-foreground">
-              Every block has a unique risk profile
+              Neighbourhood-level data reveals what suburb averages hide
             </p>
           </div>
 
@@ -447,7 +449,8 @@ export default function HomePage() {
               Toggle risk layers
             </h2>
             <p className="text-lg text-muted-foreground">
-              Combine multiple data sources for comprehensive analysis
+              Bushfire, flood, public housing, noise, and zoning — all from
+              authoritative government sources
             </p>
           </div>
 
@@ -487,8 +490,9 @@ export default function HomePage() {
                 Close deals with confidence
               </h2>
               <p className="mb-8 text-lg text-muted-foreground">
-                Provide clients with visual, data-backed recommendations that
-                build trust and speed up decision-making.
+                Consolidate council documents, government data, crime
+                statistics, and planning information into visual, client-ready
+                analysis.
               </p>
 
               <ul className="space-y-4">
@@ -546,8 +550,8 @@ export default function HomePage() {
                 Find undervalued pockets
               </h2>
               <p className="mb-8 text-lg text-muted-foreground">
-                Identify streets with strong fundamentals that the market hasn't
-                priced in yet. Make data-driven decisions, not guesses.
+                Use rigorously backtested growth forecasts and 5,000+ heatmap
+                indicators to find streets the market hasn&apos;t priced in yet.
               </p>
 
               <ul className="space-y-4">
@@ -650,8 +654,8 @@ export default function HomePage() {
               Start seeing street-level risks today
             </h2>
             <p className="mb-8 text-lg text-muted-foreground">
-              Join buyers agents and investors who are making smarter property
-              decisions with Microburbs.
+              Join 10,000+ members using Australia&apos;s most comprehensive
+              property data to make smarter decisions.
             </p>
 
             <div id="lead-form" className="mx-auto max-w-lg">
