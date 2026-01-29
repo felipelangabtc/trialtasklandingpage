@@ -15,7 +15,7 @@ const NAV_ITEMS = [
   { label: 'Investors', href: '/investors' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'About', href: '/about' },
-  { label: 'Blog', href: '/blog' },
+  { label: 'Podcast', href: '/blog' },
 ];
 
 /**

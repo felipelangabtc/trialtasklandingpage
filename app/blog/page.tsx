@@ -3,19 +3,28 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getAllPosts } from '@/lib/mdx';
-import { formatDate } from '@/lib/utils';
-import { ArrowRight, Calendar, User } from 'lucide-react';
+import { Calendar, Play, User, ExternalLink } from 'lucide-react';
+import { PODCAST_EPISODES } from '@/lib/podcast';
 
 export const metadata: Metadata = {
-  title: 'Blog - Property Intelligence Insights',
+  title: 'Microburbs Podcast - Property Data Insights with Luke Metcalfe',
   description:
-    'Expert insights on property analysis, buyers agent strategies, and investment tips from the Microburbs team.',
+    'Watch the Microburbs Podcast — conversations about property data, AI in real estate, investment strategies, and market analysis with Luke Metcalfe.',
 };
 
-export default function BlogPage() {
-  const posts = getAllPosts();
+function formatDate(dateString: string): string {
+  return new Date(dateString).toLocaleDateString('en-AU', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
 
+function getYouTubeThumbnail(youtubeId: string): string {
+  return `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`;
+}
+
+export default function PodcastPage() {
   return (
     <div className="flex flex-col">
       {/* Hero */}
@@ -23,74 +32,82 @@ export default function BlogPage() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
             <Badge className="mb-6" variant="secondary">
-              Blog
+              Podcast
             </Badge>
 
             <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl">
-              Property Intelligence Insights
+              Microburbs Podcast
             </h1>
 
             <p className="text-lg text-muted-foreground">
-              Expert analysis, strategies, and tips for buyers agents and property
-              investors.
+              Conversations about property data, AI in real estate, investment
+              strategies, and market analysis with Luke Metcalfe.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Blog Posts */}
+      {/* Episodes */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          {posts.length === 0 ? (
-            <div className="mx-auto max-w-md text-center">
-              <p className="text-muted-foreground">
-                No blog posts yet. Check back soon for insights on property
-                analysis and investment strategies.
-              </p>
-            </div>
-          ) : (
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post) => (
-                <Link key={post.slug} href={`/blog/${post.slug}`}>
-                  <Card className="h-full transition-all hover:shadow-lg">
-                    <CardHeader>
-                      <div className="mb-4 flex flex-wrap gap-2">
-                        {post.tags.map((tag) => (
-                          <Badge key={tag} variant="outline">
-                            {tag}
-                          </Badge>
-                        ))}
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {PODCAST_EPISODES.map((episode) => (
+              <Link key={episode.id} href={`/blog/${episode.id}`}>
+                <Card className="h-full transition-all hover:shadow-lg">
+                  {/* Thumbnail */}
+                  {episode.youtubeId && (
+                    <div className="relative overflow-hidden rounded-t-lg">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={getYouTubeThumbnail(episode.youtubeId)}
+                        alt={episode.title}
+                        className="aspect-video w-full object-cover"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-colors hover:bg-black/30">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/90 text-primary-foreground shadow-lg">
+                          <Play className="h-6 w-6 pl-0.5" />
+                        </div>
                       </div>
-                      <CardTitle className="hover:text-primary">
-                        {post.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="mb-4 text-sm text-muted-foreground">
-                        {post.description}
-                      </p>
+                    </div>
+                  )}
 
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {formatDate(post.date)}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <User className="h-3 w-3" />
-                          {post.author}
-                        </span>
-                      </div>
+                  <CardHeader>
+                    <div className="mb-2 flex flex-wrap gap-2">
+                      <Badge variant="outline">{episode.category}</Badge>
+                    </div>
+                    <CardTitle className="text-lg leading-snug hover:text-primary">
+                      {episode.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="mb-4 line-clamp-2 text-sm text-muted-foreground">
+                      {episode.description}
+                    </p>
 
-                      <div className="mt-4 flex items-center gap-2 text-sm font-medium text-primary">
-                        Read more
-                        <ArrowRight className="h-4 w-4" />
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          )}
+                    <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+                      <span className="flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {formatDate(episode.date)}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <User className="h-3 w-3" />
+                        Luke Metcalfe
+                      </span>
+                    </div>
+
+                    <div className="mt-4 flex items-center gap-2 text-sm font-medium text-primary">
+                      {episode.youtubeId ? 'Watch episode' : 'Listen now'}
+                      {episode.youtubeId ? (
+                        <Play className="h-4 w-4" />
+                      ) : (
+                        <ExternalLink className="h-4 w-4" />
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
     </div>
