@@ -60,14 +60,17 @@ export function Header() {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2 font-bold text-xl hover:opacity-80 transition-opacity"
+            className="flex items-center gap-2 text-xl font-bold transition-opacity hover:opacity-80"
           >
             <MapPin className="h-6 w-6 text-primary" />
             <span>Microburbs</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6" aria-label="Main navigation">
+          <nav
+            className="hidden items-center gap-6 md:flex"
+            aria-label="Main navigation"
+          >
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
@@ -85,10 +88,10 @@ export function Header() {
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden items-center gap-4 md:flex">
             <ThemeToggle />
             <Button variant="outline" size="sm" asChild>
-              <Link href="#contact">Book Demo</Link>
+              <Link href="/book-demo">Book Demo</Link>
             </Button>
             <Button size="sm" asChild onClick={handleCTAClick}>
               <Link href="#lead-form">{ctaText}</Link>
@@ -117,7 +120,10 @@ export function Header() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="border-t md:hidden">
-            <nav className="container mx-auto space-y-1 px-4 py-4" aria-label="Mobile navigation">
+            <nav
+              className="container mx-auto space-y-1 px-4 py-4"
+              aria-label="Mobile navigation"
+            >
               {NAV_ITEMS.map((item) => (
                 <Link
                   key={item.href}
@@ -136,7 +142,10 @@ export function Header() {
 
               <div className="space-y-2 pt-4">
                 <Button variant="outline" className="w-full" asChild>
-                  <Link href="#contact" onClick={() => setMobileMenuOpen(false)}>
+                  <Link
+                    href="#contact"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
                     Book Demo
                   </Link>
                 </Button>
