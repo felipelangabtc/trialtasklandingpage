@@ -43,9 +43,15 @@ interface PocketHeatmapProps {
   animate?: boolean;
 }
 
+// Seed-based pseudo-random to avoid hydration mismatches
+function seededRandom(seed: number): number {
+  const x = Math.sin(seed * 9301 + 49297) * 49297;
+  return x - Math.floor(x);
+}
+
 /**
  * Real pocket heatmap visualization component using Leaflet.
- * Shows street-level risk variation on an actual map of Melbourne.
+ * Shows street-level risk variation on an actual map of Sydney.
  */
 export function PocketHeatmap({ animate = true }: PocketHeatmapProps) {
   const [selectedPocket, setSelectedPocket] = useState<PocketData | null>(null);
@@ -58,114 +64,129 @@ export function PocketHeatmap({ animate = true }: PocketHeatmapProps) {
     import('@/lib/leaflet-setup');
   }, []);
 
-  // Melbourne CBD center coordinates
-  const center: [number, number] = [-37.8136, 144.9631];
+  // Sydney CBD center coordinates
+  const center: [number, number] = [-33.8688, 151.2093];
 
-  // Generate realistic pocket data for Melbourne streets
+  // Generate realistic pocket data for Sydney streets
   const pockets: PocketData[] = React.useMemo(() => {
-    const melbourneStreets = [
+    const sydneyStreets = [
       {
-        name: 'Collins St',
-        lat: -37.8136,
-        lng: 144.9631,
-        suburb: 'Melbourne CBD',
+        name: 'George Street',
+        lat: -33.8688,
+        lng: 151.2069,
+        suburb: 'Sydney CBD',
       },
       {
-        name: 'Bourke St',
-        lat: -37.814,
-        lng: 144.9633,
-        suburb: 'Melbourne CBD',
+        name: 'Pitt Street',
+        lat: -33.8695,
+        lng: 151.209,
+        suburb: 'Sydney CBD',
       },
       {
-        name: 'Flinders St',
-        lat: -37.8183,
-        lng: 144.9671,
-        suburb: 'Melbourne CBD',
+        name: 'Elizabeth Street',
+        lat: -33.871,
+        lng: 151.2105,
+        suburb: 'Sydney CBD',
       },
       {
-        name: 'Elizabeth St',
-        lat: -37.81,
-        lng: 144.962,
-        suburb: 'Melbourne CBD',
+        name: 'Castlereagh Street',
+        lat: -33.8705,
+        lng: 151.2095,
+        suburb: 'Sydney CBD',
       },
       {
-        name: 'Swanston St',
-        lat: -37.815,
-        lng: 144.965,
-        suburb: 'Melbourne CBD',
-      },
-      { name: 'Spencer St', lat: -37.819, lng: 144.954, suburb: 'Docklands' },
-      { name: 'King St', lat: -37.817, lng: 144.956, suburb: 'Melbourne CBD' },
-      {
-        name: 'William St',
-        lat: -37.811,
-        lng: 144.957,
-        suburb: 'Melbourne CBD',
-      },
-      { name: 'Queen St', lat: -37.812, lng: 144.96, suburb: 'Melbourne CBD' },
-      {
-        name: 'Lonsdale St',
-        lat: -37.811,
-        lng: 144.964,
-        suburb: 'Melbourne CBD',
+        name: 'Macquarie Street',
+        lat: -33.8675,
+        lng: 151.2135,
+        suburb: 'Sydney CBD',
       },
       {
-        name: 'La Trobe St',
-        lat: -37.809,
-        lng: 144.9645,
-        suburb: 'Melbourne CBD',
+        name: 'Oxford Street',
+        lat: -33.8765,
+        lng: 151.213,
+        suburb: 'Darlinghurst',
       },
       {
-        name: 'Little Collins St',
-        lat: -37.8145,
-        lng: 144.9635,
-        suburb: 'Melbourne CBD',
+        name: 'Crown Street',
+        lat: -33.878,
+        lng: 151.215,
+        suburb: 'Surry Hills',
+      },
+      {
+        name: 'Bourke Street',
+        lat: -33.879,
+        lng: 151.212,
+        suburb: 'Surry Hills',
+      },
+      {
+        name: 'Harbour Street',
+        lat: -33.8735,
+        lng: 151.2035,
+        suburb: 'Darling Harbour',
+      },
+      {
+        name: 'Sussex Street',
+        lat: -33.87,
+        lng: 151.204,
+        suburb: 'Sydney CBD',
+      },
+      {
+        name: 'Kent Street',
+        lat: -33.868,
+        lng: 151.205,
+        suburb: 'Sydney CBD',
+      },
+      {
+        name: 'Market Street',
+        lat: -33.8715,
+        lng: 151.207,
+        suburb: 'Sydney CBD',
       },
     ];
 
-    return melbourneStreets.map((street, index) => {
+    return sydneyStreets.map((street, index) => {
       // Create small rectangles representing pockets (approx 100m x 100m)
       const latOffset = 0.0009; // ~100m
       const lngOffset = 0.0012; // ~100m
+
+      const seed = index + 42;
+      const r1 = seededRandom(seed);
+      const r2 = seededRandom(seed + 10);
+      const r3 = seededRandom(seed + 20);
+      const r4 = seededRandom(seed + 30);
+      const r5 = seededRandom(seed + 40);
+      const r6 = seededRandom(seed + 50);
+      const r7 = seededRandom(seed + 60);
 
       // Vary risk scores to show variation
       const baseRisk = 0.3 + Math.sin(index * 0.7) * 0.3;
       const riskScore = Math.max(
         0.1,
-        Math.min(0.9, baseRisk + (Math.random() - 0.5) * 0.2)
+        Math.min(0.9, baseRisk + (r1 - 0.5) * 0.2)
       );
 
       // Vary median prices based on location
-      const basePrice = 800000;
-      const priceVariation = Math.floor(
-        riskScore * -200000 + Math.random() * 100000
-      );
+      const basePrice = 1200000;
+      const priceVariation = Math.floor(riskScore * -300000 + r2 * 150000);
       const medianPrice = `$${((basePrice + priceVariation) / 1000).toFixed(0)}k`;
 
       // Generate risk breakdown components
-      const floodRisk = Math.max(
-        0,
-        Math.min(1, riskScore + (Math.random() - 0.5) * 0.3)
-      );
-      const crimeRisk = Math.max(
-        0,
-        Math.min(1, riskScore + (Math.random() - 0.5) * 0.4)
-      );
-      const noiseRisk = Math.max(
-        0,
-        Math.min(1, riskScore + (Math.random() - 0.5) * 0.35)
-      );
+      const floodRisk = Math.max(0, Math.min(1, riskScore + (r3 - 0.5) * 0.3));
+      const crimeRisk = Math.max(0, Math.min(1, riskScore + (r4 - 0.5) * 0.4));
+      const noiseRisk = Math.max(0, Math.min(1, riskScore + (r5 - 0.5) * 0.35));
       const publicHousingRisk = Math.max(
         0,
-        Math.min(1, riskScore + (Math.random() - 0.5) * 0.25)
+        Math.min(1, riskScore + (r6 - 0.5) * 0.25)
       );
 
       // Price growth based on risk (lower risk = higher growth)
-      const growthRate = ((1 - riskScore) * 8 + Math.random() * 4).toFixed(1);
+      const growthRate = ((1 - riskScore) * 8 + r7 * 4).toFixed(1);
       const priceGrowth = `${growthRate}%`;
 
       // Days on market (higher risk = more days)
-      const daysOnMarket = Math.floor(30 + riskScore * 40 + Math.random() * 20);
+      const daysOnMarket = Math.floor(
+        30 + riskScore * 40 + seededRandom(seed + 70) * 20
+      );
 
       return {
         id: `pocket-${index}`,
@@ -199,10 +220,11 @@ export function PocketHeatmap({ animate = true }: PocketHeatmapProps) {
     <Card className="relative overflow-hidden bg-gradient-to-br from-slate-900 to-slate-800 p-8">
       <div className="mb-4">
         <h3 className="text-lg font-semibold text-white">
-          Street-Level Risk Variation
+          Street-Level Risk Variation — Sydney CBD
         </h3>
         <p className="text-sm text-slate-300">
-          Real Melbourne streets showing pocket-level risk profiles
+          Pocket-level risk profiles reveal what suburb averages hide —
+          available across all Australian suburbs
         </p>
       </div>
 

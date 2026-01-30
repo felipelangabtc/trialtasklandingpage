@@ -431,7 +431,8 @@ export default function HomePage() {
               See pocket-level variation
             </h2>
             <p className="text-lg text-muted-foreground">
-              Neighbourhood-level data reveals what suburb averages hide
+              Neighbourhood-level data across Australia reveals what suburb
+              averages hide
             </p>
           </div>
 
@@ -469,8 +470,8 @@ export default function HomePage() {
               Properties for sale with risk analysis
             </h2>
             <p className="text-lg text-muted-foreground">
-              Real Melbourne properties with comprehensive risk scores and
-              market data
+              Australian properties with comprehensive risk scores, market data,
+              and detailed analysis
             </p>
           </div>
 

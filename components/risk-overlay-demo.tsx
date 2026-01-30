@@ -48,26 +48,26 @@ const RISK_LAYERS: RiskLayer[] = [
     name: 'Flood Risk',
     icon: <Droplet className="h-4 w-4" />,
     color: 'rgba(59, 130, 246, 0.6)',
-    description: 'Historical flooding and flood zone data',
+    description: 'Historical flooding and flood zone data from council records',
     zones: [
       {
-        name: 'Yarra River Flood Zone',
+        name: 'Brisbane River Flood Zone',
         severity: 'high',
         coordinates: [
-          [-37.819, 144.96],
-          [-37.82, 144.965],
-          [-37.818, 144.968],
-          [-37.817, 144.963],
+          [-27.472, 153.022],
+          [-27.474, 153.028],
+          [-27.47, 153.032],
+          [-27.468, 153.026],
         ],
       },
       {
-        name: 'Minor Flood Zone',
+        name: 'Breakfast Creek Flood Plain',
         severity: 'medium',
         coordinates: [
-          [-37.81, 144.958],
-          [-37.812, 144.962],
-          [-37.809, 144.964],
-          [-37.808, 144.96],
+          [-27.45, 153.04],
+          [-27.452, 153.045],
+          [-27.449, 153.047],
+          [-27.447, 153.042],
         ],
       },
     ],
@@ -77,16 +77,16 @@ const RISK_LAYERS: RiskLayer[] = [
     name: 'Public Housing',
     icon: <Home className="h-4 w-4" />,
     color: 'rgba(168, 85, 247, 0.6)',
-    description: 'Proximity to public housing areas',
+    description: 'Proximity to public and social housing developments',
     zones: [
       {
-        name: 'Housing Estate Area',
+        name: 'South Brisbane Housing Estate',
         severity: 'medium',
         coordinates: [
-          [-37.808, 144.965],
-          [-37.81, 144.968],
-          [-37.807, 144.97],
-          [-37.806, 144.967],
+          [-27.48, 153.02],
+          [-27.482, 153.025],
+          [-27.479, 153.027],
+          [-27.477, 153.022],
         ],
       },
     ],
@@ -96,45 +96,45 @@ const RISK_LAYERS: RiskLayer[] = [
     name: 'Noise Levels',
     icon: <Volume2 className="h-4 w-4" />,
     color: 'rgba(251, 146, 60, 0.6)',
-    description: 'Traffic and environmental noise data',
+    description: 'Traffic, rail, and entertainment noise from EPA data',
     zones: [
       {
-        name: 'High Traffic Zone',
+        name: 'Fortitude Valley Entertainment Precinct',
         severity: 'high',
         coordinates: [
-          [-37.815, 144.955],
-          [-37.817, 144.959],
-          [-37.814, 144.96],
-          [-37.813, 144.956],
+          [-27.456, 153.033],
+          [-27.458, 153.038],
+          [-27.455, 153.04],
+          [-27.453, 153.035],
         ],
       },
       {
-        name: 'Train Line Noise',
+        name: 'Inner City Bypass Corridor',
         severity: 'medium',
         coordinates: [
-          [-37.812, 144.968],
-          [-37.814, 144.972],
-          [-37.811, 144.973],
-          [-37.81, 144.969],
+          [-27.462, 153.027],
+          [-27.464, 153.032],
+          [-27.461, 153.034],
+          [-27.46, 153.029],
         ],
       },
     ],
   },
   {
     id: 'fire',
-    name: 'Fire Risk',
+    name: 'Bushfire Risk',
     icon: <AlertTriangle className="h-4 w-4" />,
     color: 'rgba(239, 68, 68, 0.6)',
-    description: 'Bushfire and fire hazard zones',
+    description: 'QFES bushfire prone area mapping and vegetation analysis',
     zones: [
       {
-        name: 'Bushfire Prone Area',
+        name: 'Mt Coot-tha Bushfire Zone',
         severity: 'high',
         coordinates: [
-          [-37.805, 144.96],
-          [-37.807, 144.963],
-          [-37.804, 144.965],
-          [-37.803, 144.962],
+          [-27.48, 152.96],
+          [-27.485, 152.965],
+          [-27.482, 152.97],
+          [-27.477, 152.965],
         ],
       },
     ],
@@ -143,7 +143,7 @@ const RISK_LAYERS: RiskLayer[] = [
 
 /**
  * Interactive risk overlay demonstration component using real maps.
- * Shows how different risk layers can be toggled on/off on a real Melbourne map.
+ * Shows how different risk layers can be toggled on/off on a real Brisbane map.
  */
 export function RiskOverlayDemo() {
   const [activeLayers, setActiveLayers] = useState<Set<string>>(
@@ -158,9 +158,9 @@ export function RiskOverlayDemo() {
     import('@/lib/leaflet-setup');
   }, []);
 
-  // Melbourne CBD center coordinates
-  const center: [number, number] = [-37.8136, 144.9631];
-  const propertyLocation: [number, number] = [-37.8136, 144.9631];
+  // Brisbane CBD center coordinates
+  const center: [number, number] = [-27.4698, 153.0251];
+  const propertyLocation: [number, number] = [-27.4698, 153.0251];
 
   const toggleLayer = (layerId: string) => {
     setActiveLayers((prev) => {
@@ -199,7 +199,7 @@ export function RiskOverlayDemo() {
             ) : (
               <MapContainer
                 center={center}
-                zoom={14}
+                zoom={13}
                 style={{ height: '100%', width: '100%' }}
                 scrollWheelZoom={false}
               >
@@ -276,10 +276,12 @@ export function RiskOverlayDemo() {
         {/* Layer Controls */}
         <div className="p-6 lg:p-8">
           <div className="mb-6">
-            <h3 className="text-xl font-semibold">Risk Layer Controls</h3>
+            <h3 className="text-xl font-semibold">
+              Risk Layer Controls — Brisbane
+            </h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Toggle different risk overlays to see comprehensive property
-              analysis
+              Toggle different risk overlays for comprehensive property analysis
+              — available across all Australian suburbs
             </p>
           </div>
 
