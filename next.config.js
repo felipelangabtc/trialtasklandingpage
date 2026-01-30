@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -28,7 +29,7 @@ const nextConfig = {
               "img-src 'self' data: https:",
               "font-src 'self' data:",
               "connect-src 'self' https://app.posthog.com https://*.sentry.io",
-              "frame-src 'self'",
+              "frame-src 'self' https://www.youtube.com",
             ].join('; '),
           },
           {
