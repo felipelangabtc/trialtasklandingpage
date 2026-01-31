@@ -27,12 +27,13 @@ import {
   ArrowRight,
 } from 'lucide-react';
 
-const SOCIAL_PROOF_LOGOS = [
-  'Ray White',
-  'McGrath Estate Agents',
-  'Belle Property',
-  'LJ Hooker',
-  'Harcourts',
+const MEDIA_MENTIONS = [
+  'The Age',
+  'Sydney Morning Herald',
+  'Australian Financial Review',
+  'Domain',
+  'Your Investment Property',
+  'Canberra Times',
 ];
 
 const TESTIMONIALS: Testimonial[] = [
@@ -50,9 +51,9 @@ const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote:
-      'Microburbs made the data so clear — I finally know exactly what to look for and where the real opportunities are.',
-    author: 'Kavita',
-    role: 'Property Investor',
+      'We really do lean a lot on the research points that are available to us from our subscription with Microburbs.',
+    author: 'Emmanuel Michael',
+    role: 'InvestorMate',
   },
 ];
 
@@ -61,7 +62,7 @@ const FEATURES = [
     icon: MapPin,
     title: 'Pocket Heatmaps',
     description:
-      'Access 5,000+ heatmap indicators at the street level. See risk variation within suburbs — not just averages.',
+      'Access 5,000+ metrics at the street level. See risk variation within suburbs — not just averages.',
   },
   {
     icon: Layers,
@@ -94,7 +95,7 @@ const HOW_IT_WORKS_STEPS = [
     number: '02',
     title: 'Explore DataExplorer',
     description:
-      'Access 5,000+ heatmap indicators — flood, noise, public housing, bushfire, zoning, demographics, and more.',
+      'Access 5,000+ metrics — flood, noise, public housing, bushfire, zoning, demographics, and more.',
   },
   {
     number: '03',
@@ -120,7 +121,7 @@ const BUYERS_AGENT_OUTCOMES = [
 
 const INVESTOR_OUTCOMES = [
   'Identify undervalued pockets with backtested growth forecasts',
-  'Avoid streets with hidden capital growth risks using 5,000+ indicators',
+  'Avoid streets with hidden capital growth risks using 5,000+ metrics',
   'Make data-driven decisions with weekly updated median house prices',
   'Track multiple markets with Suburb Finder and DataExplorer',
   'Spot emerging risks early — development applications tracked weekly',
@@ -163,9 +164,9 @@ export default function HomePage() {
               </h1>
 
               <p className="mb-8 text-lg text-muted-foreground sm:text-xl">
-                Australia&apos;s most comprehensive property data — 2+ billion
-                data points and 5,000+ heatmap indicators that go deeper than
-                suburb-level averages. Built for buyers agents and investors.
+                Street-by-street data, week-by-week. 2+ billion data points and
+                5,000+ metrics for every suburb — hyperlocal data at the street
+                level, updated weekly. Built for buyers agents and investors.
               </p>
 
               <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
@@ -201,15 +202,15 @@ export default function HomePage() {
       <section className="border-y bg-muted/30 py-8">
         <div className="container mx-auto px-4">
           <p className="mb-6 text-center text-sm text-muted-foreground">
-            Trusted by 10,000+ members and 5+ million site visitors since 2014
+            As seen in
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8 opacity-60">
-            {SOCIAL_PROOF_LOGOS.map((logo) => (
+            {MEDIA_MENTIONS.map((name) => (
               <div
-                key={logo}
+                key={name}
                 className="text-lg font-semibold text-muted-foreground"
               >
-                {logo}
+                {name}
               </div>
             ))}
           </div>
@@ -235,30 +236,33 @@ export default function HomePage() {
               <Card>
                 <CardContent className="pt-6 text-center">
                   <div className="mb-2 text-3xl font-bold text-destructive">
-                    4-5 hrs
+                    Council PDFs
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Wasted per day checking 50 properties
+                    Hours spent searching government spreadsheets and planning
+                    data
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardContent className="pt-6 text-center">
                   <div className="mb-2 text-3xl font-bold text-destructive">
-                    $200K
+                    Crime Stats
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Price gap you could have spotted
+                    Scattered across multiple sources with no street-level
+                    context
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardContent className="pt-6 text-center">
                   <div className="mb-2 text-3xl font-bold text-destructive">
-                    25-30%
+                    Hidden Risks
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Public housing you didn&apos;t see
+                    Flood zones, public housing, and noise levels invisible in
+                    suburb data
                   </p>
                 </CardContent>
               </Card>
@@ -315,31 +319,14 @@ export default function HomePage() {
             <Card className="border-l-4 border-primary">
               <CardContent className="pt-6">
                 <p className="mb-4 text-lg font-medium italic">
-                  &quot;Microburbs made the data so clear — I finally know
-                  exactly what to look for and where the real opportunities
-                  are.&quot;
+                  &quot;We really do lean a lot on the research points that are
+                  available to us from our subscription with Microburbs.&quot;
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  — Kavita, Property Investor
+                  — Emmanuel Michael, InvestorMate
                 </p>
                 <p className="mt-2 text-xs text-primary">
-                  Actionable insights, not data overwhelm
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-l-4 border-primary">
-              <CardContent className="pt-6">
-                <p className="mb-4 text-lg font-medium italic">
-                  &quot;Before Microburbs, I was spending hours on research. Now
-                  I shortlist properties in minutes with full confidence in the
-                  risk profile.&quot;
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  — Daniel Rourke, Property Investor
-                </p>
-                <p className="mt-2 text-xs text-primary">
-                  Hours of research reduced to minutes
+                  Trusted by professional investment firms
                 </p>
               </CardContent>
             </Card>
@@ -390,10 +377,10 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="mb-16 text-center">
             <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
-              Our data goes deeper than anyone else
+              Hyperlocal data at the street level, updated weekly
             </h2>
             <p className="text-lg text-muted-foreground">
-              2+ billion data points across 5,000+ indicators, updated weekly
+              2+ billion data points across 5,000+ metrics for every suburb
             </p>
           </div>
 
@@ -551,8 +538,8 @@ export default function HomePage() {
                 Find undervalued pockets
               </h2>
               <p className="mb-8 text-lg text-muted-foreground">
-                Use rigorously backtested growth forecasts and 5,000+ heatmap
-                indicators to find streets the market hasn&apos;t priced in yet.
+                Use rigorously backtested capital growth forecasts and 5,000+
+                metrics to find streets the market hasn&apos;t priced in yet.
               </p>
 
               <ul className="space-y-4">
@@ -655,8 +642,8 @@ export default function HomePage() {
               Start seeing street-level risks today
             </h2>
             <p className="mb-8 text-lg text-muted-foreground">
-              Join 10,000+ members using Australia&apos;s most comprehensive
-              property data to make smarter decisions.
+              Join property seekers using street-by-street data, updated weekly,
+              to make smarter decisions.
             </p>
 
             <div id="lead-form" className="mx-auto max-w-lg">
