@@ -45,7 +45,7 @@ const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote:
-      'This is an absolute game changer! I’ve bought several investment properties during the past ten years and each purchase involves so many hours of research. Trying to find the right suburb, then the right pocket, the right street, the right property…. It’s massively time consuming. I am so impressed with Microburbs. I just wrote a few sentences about what I was trying to achieve and in less than a minute I had the most incredibly detailed research and property suggestions. Thinking about the days and days of research that it has saved me it’s the best money I’ve spent - heading out this weekend to start inspecting the property suggestions!',
+      'This is an absolute game changer! I’ve bought several investment properties during the past ten years and each purchase involves so many hours of research. Trying to find the right suburb, then the right pocket, the right street, the right property…. It’s massively time consuming.',
     author: 'Angie Cai',
     role: 'Property Investor',
   },
@@ -303,7 +303,7 @@ export default function HomePage() {
             <Card className="border-l-4 border-primary">
               <CardContent className="pt-6">
                 <p className="mb-4 text-lg font-medium italic">
-                  &quot; I am so impressed with Microburbs. I just wrote a few
+                  &quot;I am so impressed with Microburbs. I just wrote a few
                   sentences about what I was trying to achieve and in less than
                   a minute I had the most incredibly detailed research and
                   property suggestions. Thinking about the days and days of
