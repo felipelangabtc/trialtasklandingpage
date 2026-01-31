@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card } from '@/components/ui/card';
+import { MapFallback } from '@/components/map-fallback';
 import {
   Bed,
   Bath,
@@ -349,8 +350,19 @@ export function PropertiesForSaleMap({
   );
 
   useEffect(() => {
-    setIsMounted(true);
-    import('@/lib/leaflet-setup');
+    import('@/lib/leaflet-setup')
+      .then(() => setIsMounted(true))
+      .catch((err) => {
+        console.error('[PropertiesForSaleMap] Failed to load Leaflet:', err);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if (
+          typeof window !== 'undefined' &&
+          (window as Record<string, any>).Sentry
+        ) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (window as Record<string, any>).Sentry.captureException(err);
+        }
+      });
   }, []);
 
   // Australia center
@@ -511,9 +523,7 @@ export function PropertiesForSaleMap({
           <Card className="overflow-hidden">
             <div className="h-[600px] w-full">
               {!isMounted ? (
-                <div className="flex h-full w-full items-center justify-center bg-slate-100 text-slate-500">
-                  Loading map...
-                </div>
+                <MapFallback label="Australia property map" />
               ) : (
                 <MapContainer
                   center={center}

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
+import { MapFallback } from '@/components/map-fallback';
 
 // Dynamically import Leaflet components to avoid SSR issues
 const MapContainer = dynamic(
@@ -59,9 +60,19 @@ export function PocketHeatmap({ animate = true }: PocketHeatmapProps) {
 
   // Only render map on client side
   useEffect(() => {
-    setIsMounted(true);
-    // Import Leaflet setup for icon configuration
-    import('@/lib/leaflet-setup');
+    import('@/lib/leaflet-setup')
+      .then(() => setIsMounted(true))
+      .catch((err) => {
+        console.error('[PocketHeatmap] Failed to load Leaflet:', err);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if (
+          typeof window !== 'undefined' &&
+          (window as Record<string, any>).Sentry
+        ) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (window as Record<string, any>).Sentry.captureException(err);
+        }
+      });
   }, []);
 
   // Sydney CBD center coordinates
@@ -235,9 +246,7 @@ export function PocketHeatmap({ animate = true }: PocketHeatmapProps) {
         className="h-[500px] w-full overflow-hidden rounded-lg"
       >
         {!isMounted ? (
-          <div className="flex h-full w-full items-center justify-center bg-slate-700 text-white">
-            Loading map...
-          </div>
+          <MapFallback label="Sydney pocket heatmap" />
         ) : (
           <MapContainer
             center={center}

@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Home, Droplet, Volume2, AlertTriangle } from 'lucide-react';
+import { MapFallback } from '@/components/map-fallback';
 
 // Dynamically import Leaflet components to avoid SSR issues
 const MapContainer = dynamic(
@@ -153,9 +154,19 @@ export function RiskOverlayDemo() {
 
   // Only render map on client side
   useEffect(() => {
-    setIsMounted(true);
-    // Import Leaflet setup for icon configuration
-    import('@/lib/leaflet-setup');
+    import('@/lib/leaflet-setup')
+      .then(() => setIsMounted(true))
+      .catch((err) => {
+        console.error('[RiskOverlayDemo] Failed to load Leaflet:', err);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if (
+          typeof window !== 'undefined' &&
+          (window as Record<string, any>).Sentry
+        ) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (window as Record<string, any>).Sentry.captureException(err);
+        }
+      });
   }, []);
 
   // Brisbane CBD center coordinates
@@ -193,9 +204,7 @@ export function RiskOverlayDemo() {
         <div className="relative aspect-square bg-slate-200 dark:bg-slate-700 lg:aspect-auto">
           <div className="h-full w-full">
             {!isMounted ? (
-              <div className="flex h-full w-full items-center justify-center text-slate-500">
-                Loading map...
-              </div>
+              <MapFallback label="Brisbane risk overlay" />
             ) : (
               <MapContainer
                 center={center}
