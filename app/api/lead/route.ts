@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
       const { prisma } = await import('@/lib/prisma');
       const lead = await prisma.lead.create({
         data: {
-          name: data.name,
+          name: data.name || '',
           email: data.email,
           phone: data.phone,
           role: data.role,
@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
       // Log the lead data and continue
       logger.warn(
         {
-          name: data.name,
+          name: data.name || '',
           email: data.email,
           role: data.role,
           source: body.source || 'unknown',
@@ -123,7 +123,7 @@ export async function POST(request: NextRequest) {
           },
           body: JSON.stringify({
             leadId,
-            name: data.name,
+            name: data.name || '',
             email: data.email,
             phone: data.phone,
             role: data.role,

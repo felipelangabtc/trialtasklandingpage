@@ -39,6 +39,7 @@ export function LeadForm({
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showMore, setShowMore] = useState(false);
 
   const {
     register,
@@ -95,7 +96,9 @@ export function LeadForm({
     } catch (err) {
       console.error('Form submission error:', err);
       setError(
-        err instanceof Error ? err.message : 'Something went wrong. Please try again.'
+        err instanceof Error
+          ? err.message
+          : 'Something went wrong. Please try again.'
       );
 
       track('lead_form_error', {
@@ -118,11 +121,9 @@ export function LeadForm({
 
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Name */}
+          {/* Name (optional) */}
           <div className="space-y-2">
-            <Label htmlFor="name">
-              Full Name <span className="text-destructive">*</span>
-            </Label>
+            <Label htmlFor="name">Name</Label>
             <Input
               id="name"
               {...register('name')}
@@ -151,21 +152,6 @@ export function LeadForm({
             )}
           </div>
 
-          {/* Phone */}
-          <div className="space-y-2">
-            <Label htmlFor="phone">Phone (Optional)</Label>
-            <Input
-              id="phone"
-              type="tel"
-              {...register('phone')}
-              placeholder="0400 000 000"
-              aria-invalid={errors.phone ? 'true' : 'false'}
-            />
-            {errors.phone && (
-              <p className="text-sm text-destructive">{errors.phone.message}</p>
-            )}
-          </div>
-
           {/* Role */}
           <div className="space-y-2">
             <Label htmlFor="role">
@@ -177,7 +163,10 @@ export function LeadForm({
                 setValue('role', value as LeadFormData['role'])
               }
             >
-              <SelectTrigger id="role" aria-invalid={errors.role ? 'true' : 'false'}>
+              <SelectTrigger
+                id="role"
+                aria-invalid={errors.role ? 'true' : 'false'}
+              >
                 <SelectValue placeholder="Select your role" />
               </SelectTrigger>
               <SelectContent>
@@ -191,19 +180,53 @@ export function LeadForm({
             )}
           </div>
 
-          {/* Message */}
-          <div className="space-y-2">
-            <Label htmlFor="message">Message (Optional)</Label>
-            <Textarea
-              id="message"
-              {...register('message')}
-              placeholder="Tell us about your needs..."
-              rows={3}
-            />
-            {errors.message && (
-              <p className="text-sm text-destructive">{errors.message.message}</p>
-            )}
-          </div>
+          {/* Collapsed optional fields */}
+          {!showMore && (
+            <button
+              type="button"
+              className="text-sm text-muted-foreground underline hover:text-primary"
+              onClick={() => setShowMore(true)}
+            >
+              Add more details (optional)
+            </button>
+          )}
+
+          {showMore && (
+            <div className="space-y-4">
+              {/* Phone */}
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone</Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  {...register('phone')}
+                  placeholder="0400 000 000"
+                  aria-invalid={errors.phone ? 'true' : 'false'}
+                />
+                {errors.phone && (
+                  <p className="text-sm text-destructive">
+                    {errors.phone.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Message */}
+              <div className="space-y-2">
+                <Label htmlFor="message">Message</Label>
+                <Textarea
+                  id="message"
+                  {...register('message')}
+                  placeholder="Tell us about your needs..."
+                  rows={3}
+                />
+                {errors.message && (
+                  <p className="text-sm text-destructive">
+                    {errors.message.message}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Marketing Consent */}
           <div className="flex items-start space-x-2">

@@ -6,9 +6,9 @@ import { z } from 'zod';
 export const leadFormSchema = z.object({
   name: z
     .string()
-    .min(2, 'Name must be at least 2 characters')
     .max(100, 'Name must be less than 100 characters')
-    .trim(),
+    .trim()
+    .optional(),
   email: z
     .string()
     .email('Please enter a valid email address')
@@ -21,7 +21,9 @@ export const leadFormSchema = z.object({
       (val) => {
         if (!val) return true;
         const cleaned = val.replace(/[\s\-()]/g, '');
-        return /^(\+?61|0)[2-478]\d{8}$/.test(cleaned) || /^04\d{8}$/.test(cleaned);
+        return (
+          /^(\+?61|0)[2-478]\d{8}$/.test(cleaned) || /^04\d{8}$/.test(cleaned)
+        );
       },
       {
         message: 'Please enter a valid Australian phone number',
@@ -30,7 +32,10 @@ export const leadFormSchema = z.object({
   role: z.enum(['buyers_agent', 'investor', 'other'], {
     required_error: 'Please select your role',
   }),
-  message: z.string().max(1000, 'Message must be less than 1000 characters').optional(),
+  message: z
+    .string()
+    .max(1000, 'Message must be less than 1000 characters')
+    .optional(),
   marketingConsent: z.boolean().default(false),
   // Honeypot field - should be empty
   website_url: z.string().max(0, 'Invalid submission').optional(),
